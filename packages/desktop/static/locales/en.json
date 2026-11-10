@@ -979,7 +979,8 @@
     "showControls": "Show controls",
     "hideControls": "Hide controls",
     "autoHideControls": "Automatically hide controls during playback",
-    "engineLicense": "Speech engine license (GPL-3.0-or-later)"
+    "engineLicense": "Speech engine license (GPL-3.0-or-later)",
+    "selection": "Read Selection Aloud"
   },
   "common": {
     "cancel": "Cancel",

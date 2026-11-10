@@ -2,6 +2,7 @@ import { Menu, MenuItem, type BrowserWindow, type MenuItemConstructorOptions } f
 import {
   getCUT,
   getCOPY,
+  getReadSelectionAloud,
   getPASTE,
   getCopyAsRich,
   getCopyAsHtml,
@@ -99,6 +100,11 @@ export const showEditorContextMenu = (
           submenu: spellingSubmenu as Electron.MenuItemConstructorOptions[]
         })
       )
+      menu.append(new MenuItem(SEPARATOR))
+    }
+
+    if (hasText) {
+      menu.append(new MenuItem(getReadSelectionAloud()))
       menu.append(new MenuItem(SEPARATOR))
     }
 

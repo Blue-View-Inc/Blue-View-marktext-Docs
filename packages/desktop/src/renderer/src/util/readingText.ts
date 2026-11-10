@@ -31,11 +31,14 @@ const splitLongSentence = (text: string): string[] => {
 export const readingSentences = (
   markdown: string,
   skipCitations = true,
-  language?: string
+  language?: string,
+  format: 'markdown' | 'html' = 'markdown'
 ): ReadingSentence[] => {
   const template = document.createElement('template')
   const proseMarkdown = markdown.replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, '')
-  template.innerHTML = renderToStaticHTML(proseMarkdown, { footnote: true, frontMatter: true })
+  template.innerHTML = format === 'html'
+    ? proseMarkdown
+    : renderToStaticHTML(proseMarkdown, { footnote: true, frontMatter: true })
   const root = template.content
   root
     .querySelectorAll('script, style, pre, svg, math, .katex, .front-matter, .frontmatter')

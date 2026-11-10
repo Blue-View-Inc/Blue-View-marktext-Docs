@@ -6,6 +6,12 @@ It shows the current sentence and supports pause/resume, previous/next sentence,
 previous/next paragraph, stop, and playback speeds from 0.5× to 2×. Pause retains
 the audio position. Switching documents stops playback.
 
+To read only a passage, highlight it and right-click **Read Selection Aloud**.
+This works in editing, reading and source modes. The selection is captured before
+the popup takes focus and stays scoped to its document. Voice settings, navigation,
+URL skipping and playback controls apply to that passage. **Read document** switches
+back to the full document. Changing citation settings retains the selected passage.
+
 Controls automatically collapse to a compact Pause/Stop bar during playback.
 **Show controls** expands them without stopping speech. Pausing, finishing, or
 encountering an error restores the full controls. **Hide controls** collapses

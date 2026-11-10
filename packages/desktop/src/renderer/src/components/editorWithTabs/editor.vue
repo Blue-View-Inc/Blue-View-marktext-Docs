@@ -122,6 +122,7 @@ import { applyCursor, isIndexCursor } from '@/util/cursor'
 import EditorSearch from '../search/index.vue'
 import MediaViewer from '../mediaViewer/index.vue'
 import bus from '@/bus'
+import { captureRenderedReadingSelection } from '@/services/readingSelection'
 import { DEFAULT_EDITOR_FONT_FAMILY, DEFAULT_CODE_FONT_FAMILY } from '@/config'
 import notice from '@/services/notification'
 import { beforeImageDrop } from '@/services/imageDrop'
@@ -370,6 +371,12 @@ const adaptSelectionChange = ({ selection }: ISelectionChangePayload) => {
       type: focusInfo?.type
     },
     affiliation
+  }
+}
+
+const captureSelectionForReading = (): void => {
+  if (currentFile.value && editor.value) {
+    captureRenderedReadingSelection(currentFile.value.id, editor.value.domNode)
   }
 }
 
@@ -1792,6 +1799,8 @@ onMounted(() => {
   const muya = markRaw(new Muya(ele, options))
   muya.init({ focus: editorStore.TAKE_OPEN_INTENT(currentFile.value?.pathname) !== false })
   editor.value = muya
+  // Muya replaces the Vue mount node, so capture must use its live container.
+  muya.domNode.addEventListener('contextmenu', captureSelectionForReading, true)
   muya.on('image-drop-error', () => {
     void notice.notify({ title: t('editor.imageDrop.failed'), type: 'error' })
   })
@@ -1801,6 +1810,13 @@ onMounted(() => {
       const hasSelection = document.getSelection()?.isCollapsed === false
       popupContextMenu(
         [
+          ...(hasSelection
+            ? [{
+                id: 'readSelectionAloudMenuItem',
+                label: t('readAloud.selection'),
+                click: () => bus.emit('read-aloud-selection')
+              }]
+            : []),
           {
             label: t('menu.edit.copy'),
             enabled: hasSelection,
@@ -2038,6 +2054,7 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
+  editor.value?.domNode.removeEventListener('contextmenu', captureSelectionForReading, true)
   releaseViewState?.()
   registerDocumentView(null)
   document.removeEventListener('selectionchange', readingSelectionChanged)

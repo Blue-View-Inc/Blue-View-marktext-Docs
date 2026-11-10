@@ -1,6 +1,15 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-const { getLookUp, lookUpSelection } = await import('main_renderer/contextMenu/editor/menuItems')
+const { getLookUp, lookUpSelection, getReadSelectionAloud } = await import('main_renderer/contextMenu/editor/menuItems')
+
+it('routes Read Selection Aloud to the window that opened the context menu', () => {
+  const send = vi.fn()
+  const item = getReadSelectionAloud()
+  item.click?.({} as never, { webContents: { send } } as never, {} as never)
+  expect(item.label).toBe('Read Selection Aloud')
+  expect(item.id).toBe('readSelectionAloudMenuItem')
+  expect(send).toHaveBeenCalledWith('mt::read-aloud-selection')
+})
 
 describe('editor context menu Look Up', () => {
   const showDefinitionForSelection = vi.fn()

@@ -15,6 +15,16 @@ export const getCOPY = (): MenuItemConstructorOptions => ({
   role: 'copy'
 })
 
+export const getReadSelectionAloud = (): MenuItemConstructorOptions => ({
+  label: t('readAloud.selection'),
+  id: 'readSelectionAloudMenuItem',
+  click(_menuItem, targetWindow) {
+    if (targetWindow) {
+      ;(targetWindow as BrowserWindow).webContents.send('mt::read-aloud-selection')
+    }
+  }
+})
+
 export const getPASTE = (): MenuItemConstructorOptions => ({
   label: t('contextMenu.paste'),
   id: 'pasteMenuItem',

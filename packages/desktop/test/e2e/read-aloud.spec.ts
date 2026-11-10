@@ -1,7 +1,8 @@
 import { expect, test } from '@playwright/test'
 import { existsSync } from 'node:fs'
 import path from 'node:path'
-import { clickMenuById, enterSourceMode, launchWithMarkdown } from './helpers'
+import type CodeMirror from 'codemirror'
+import { clickMenuById, enterSourceMode, launchWithMarkdown, toggleReadingMode } from './helpers'
 
 test.skip(
   !existsSync(path.resolve(__dirname, '../../static/speech/python/bin/python3')),
@@ -106,6 +107,94 @@ test('continues naturally across sentences while omitting code blocks and URLs',
     await expect(page.locator('.reading-status')).toContainText('Sentence 3/3', { timeout: 10000 })
     await expect(page.locator('.reading-status')).toHaveText('Finished', { timeout: 10000 })
     await expect(page.locator('.reading-sentence')).toHaveText('The next paragraph is ready.')
+  } finally {
+    await app.close()
+  }
+})
+
+test('reads only a right-click selection in editing, reading and source modes', async() => {
+  test.setTimeout(120000)
+  const chosen = 'Only this highlighted sentence should be read aloud.'
+  const { app, page } = await launchWithMarkdown(
+    `Before is outside the selection.\n\nUnselected start. ${chosen} Unselected end.\n\nAfter is outside the selection.`
+  )
+  try {
+    await app.evaluate(({ Menu }) => {
+      const state = globalThis as unknown as { selectionMenuLabels: string[]; selectionPopupCount: number }
+      state.selectionMenuLabels = []
+      state.selectionPopupCount = 0
+      Menu.prototype.popup = function(options = {}) {
+        state.selectionPopupCount++
+        state.selectionMenuLabels = this.items.map(item => item.label)
+        const item = this.items.find(item => item.label === 'Read Selection Aloud')
+        if (item?.enabled) item.click(item, options.window, {} as Electron.KeyboardEvent)
+        options.callback?.()
+      }
+    })
+    await page.evaluate(() => {
+      const play = HTMLMediaElement.prototype.play
+      HTMLMediaElement.prototype.play = function() {
+        this.muted = true
+        return play.call(this)
+      }
+    })
+    await page.locator('.mu-paragraph .mu-content').first().click({ button: 'right' })
+    await expect.poll(() => app.evaluate(() =>
+      (globalThis as unknown as { selectionPopupCount: number }).selectionPopupCount
+    )).toBeGreaterThan(0)
+    await expect.poll(() => app.evaluate(() =>
+      (globalThis as unknown as { selectionMenuLabels: string[] }).selectionMenuLabels
+    )).not.toContain('Read Selection Aloud')
+
+    for (const mode of ['editing', 'reading', 'source']) {
+      if (mode === 'reading') await toggleReadingMode(page)
+      if (mode === 'source') {
+        await toggleReadingMode(page)
+        await enterSourceMode(page, app)
+      }
+      const point = await page.evaluate(({ chosen, source }) => {
+        if (source) {
+          const element = document.querySelector('.source-code .CodeMirror') as HTMLElement & { CodeMirror: CodeMirror.Editor }
+          const cm = element.CodeMirror
+          const start = cm.getValue().indexOf(chosen)
+          const from = cm.posFromIndex(start)
+          cm.setSelection(from, cm.posFromIndex(start + chosen.length))
+          cm.focus()
+          const coordinates = cm.charCoords(from, 'window')
+          return { x: coordinates.left + 5, y: coordinates.top + 5 }
+        }
+        const editor = document.querySelector('.editor-component')
+        if (!editor) throw new Error('Editor not found')
+        const walker = document.createTreeWalker(editor, NodeFilter.SHOW_TEXT)
+        let text = walker.nextNode()
+        while (text && !text.textContent?.includes(chosen)) text = walker.nextNode()
+        if (!text) throw new Error('Selected passage not found')
+        const start = (text.textContent ?? '').indexOf(chosen)
+        const range = document.createRange()
+        range.setStart(text, start)
+        range.setEnd(text, start + chosen.length)
+        const selected = document.getSelection()
+        if (!selected) throw new Error('Selection API unavailable')
+        selected.removeAllRanges()
+        selected.addRange(range)
+        const rectangle = range.getBoundingClientRect()
+        return { x: rectangle.left + 5, y: rectangle.top + 5 }
+      }, { chosen, source: mode === 'source' })
+      await page.mouse.click(point.x, point.y, { button: 'right' })
+      await expect(page.locator('.reading-status')).toContainText('Sentence 1/1', { timeout: 30000 })
+      await page.getByRole('button', { name: 'Pause', exact: true }).click()
+      await expect(page.locator('.reading-sentence')).toHaveText(chosen)
+      await expect(page.locator('.reading-controls strong')).toHaveText('Read Selection Aloud')
+      await expect(page.getByRole('button', { name: 'Read document', exact: true })).toBeVisible()
+      if (mode === 'editing') {
+        await page.locator('.skip-citations input').uncheck()
+        await expect(page.locator('.reading-status')).toContainText('Sentence 1/1', { timeout: 30000 })
+        await page.getByRole('button', { name: 'Pause', exact: true }).click()
+        await expect(page.locator('.reading-sentence')).toHaveText(chosen)
+      }
+      await page.getByRole('button', { name: 'Stop reading', exact: true }).click()
+    }
+    await expect(page.locator('.tabs-container li.unsaved')).toHaveCount(0)
   } finally {
     await app.close()
   }

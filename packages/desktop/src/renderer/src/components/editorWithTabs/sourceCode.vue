@@ -29,6 +29,9 @@ import { wordCount as getWordCount } from '@muyajs/core'
 import { adjustCursor, isWindows } from '../../util'
 import { getSourceExtraKeys } from '../../codeMirror/keybindings'
 import bus from '../../bus'
+import { useI18n } from 'vue-i18n'
+import { popupContextMenu } from '@/contextMenu/popupMenu'
+import { captureSourceReadingSelection } from '@/services/readingSelection'
 import { oneDarkThemes, railscastsThemes } from '@/config'
 
 interface MuyaIndexCursorLike {
@@ -43,6 +46,7 @@ const props = defineProps<{
 }>()
 
 const editorStore = useEditorStore()
+const { t } = useI18n()
 const preferencesStore = usePreferencesStore()
 
 const sourceCodeContainer = ref<HTMLDivElement | null>(null)
@@ -453,6 +457,18 @@ onMounted(() => {
   codeMirrorInstance.on('contextmenu', (_cm: CodeMirror.Editor, event: Event) => {
     event.preventDefault()
     event.stopPropagation()
+    const selected = codeMirrorInstance.getSelection()
+    if (!(event instanceof MouseEvent) || !selected.trim() || !currentTab.value) return
+    captureSourceReadingSelection(currentTab.value.id, selected)
+    popupContextMenu([
+      {
+        id: 'readSelectionAloudMenuItem',
+        label: t('readAloud.selection'),
+        click: () => bus.emit('read-aloud-selection')
+      },
+      { label: t('menu.edit.copy'), click: () => window.electron.clipboard.writeText(selected) },
+      { label: t('menu.edit.selectAll'), click: () => codeMirrorInstance.execCommand('selectAll') }
+    ], { x: event.clientX, y: event.clientY })
   })
 
   if (isValidMuyaIndexCursor(muyaIndexCursor)) {

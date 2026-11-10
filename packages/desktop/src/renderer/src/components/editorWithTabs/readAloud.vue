@@ -58,7 +58,7 @@
         role="group"
         :aria-label="t('readAloud.playback')"
       >
-        <strong>{{ t('readAloud.title') }}</strong>
+        <strong>{{ t(selectionSnapshot ? 'readAloud.selection' : 'readAloud.title') }}</strong>
         <button
           type="button"
           class="plain-button"
@@ -68,7 +68,7 @@
           {{ t('readAloud.tuneVoice') }}
         </button>
         <button
-          v-if="previewing"
+          v-if="previewing || selectionSnapshot"
           type="button"
           class="plain-button"
           @click="start"
@@ -229,6 +229,8 @@ import { readingSentences } from '@/util/readingText'
 import { loadSpeechCalibration, saveSpeechCalibration } from '@/util/speechPreferences'
 import type { SpeechVoiceSettings } from '@shared/types/speech'
 import VoiceSettings from './voiceSettings.vue'
+import bus from '@/bus'
+import { getReadingSelection, type ReadingSelection } from '@/services/readingSelection'
 
 const { t } = useI18n()
 const editorStore = useEditorStore()
@@ -241,6 +243,7 @@ const previewing = ref(false)
 const voice = ref(loadSpeechCalibration())
 const skipCitations = ref(true)
 const sentences = shallowRef<ReadingSentence[]>([])
+const selectionSnapshot = shallowRef<ReadingSelection | null>(null)
 const state = shallowRef<ReadingState>({ status: 'stopped', index: 0, rate: 1, error: null })
 const ipc = window.electron.ipcRenderer
 const player = new ReadAloudPlayer(
@@ -287,27 +290,42 @@ const errorText = computed(() => {
   return t(state.value.error === 'unavailable' ? 'readAloud.unavailable' : 'readAloud.failed')
 })
 
-const start = (): void => {
-  if (!editorStore.currentFile) return
-  editorStore.flushActiveEditor()
+const beginReading = (content: string, format: ReadingSelection['format'] = 'markdown'): void => {
   previewing.value = false
   collapseWhenReady = true
   collapsed.value = false
   sentences.value = readingSentences(
-    editorStore.currentFile.markdown,
+    content,
     skipCitations.value,
-    voice.value.voiceId.split('-')[0]
+    voice.value.voiceId.split('-')[0],
+    format
   )
   open.value = true
   player.start(sentences.value)
 }
+const start = (): void => {
+  if (!editorStore.currentFile) return
+  editorStore.flushActiveEditor()
+  selectionSnapshot.value = null
+  beginReading(editorStore.currentFile.markdown)
+}
+const startSelection = (): void => {
+  const snapshot = getReadingSelection(editorStore.currentFile?.id)
+  if (!snapshot) return
+  editorStore.flushActiveEditor()
+  selectionSnapshot.value = snapshot
+  beginReading(snapshot.content, snapshot.format)
+}
 const close = (): void => {
   collapseWhenReady = false
+  selectionSnapshot.value = null
   player.stop()
   open.value = false
 }
 const restart = (): void => {
-  start()
+  const snapshot = selectionSnapshot.value
+  if (snapshot) beginReading(snapshot.content, snapshot.format)
+  else start()
 }
 const togglePlayback = (): void => {
   if (active.value) player.pause()
@@ -347,9 +365,10 @@ const previewVoice = (): void => {
   if (!editorStore.currentFile) return
   editorStore.flushActiveEditor()
   sentences.value = readingSentences(
-    editorStore.currentFile.markdown,
+    selectionSnapshot.value?.content ?? editorStore.currentFile.markdown,
     skipCitations.value,
-    voice.value.voiceId.split('-')[0]
+    voice.value.voiceId.split('-')[0],
+    selectionSnapshot.value?.format ?? 'markdown'
   ).slice(0, 1)
   open.value = true
   previewing.value = true
@@ -359,6 +378,8 @@ const previewVoice = (): void => {
 const removeMenuListener = ipc.on('mt::read-aloud', () => {
   start()
 })
+const removeSelectionListener = ipc.on('mt::read-aloud-selection', startSelection)
+bus.on('read-aloud-selection', startSelection)
 watch(
   () => editorStore.currentFile?.id,
   () => {
@@ -367,6 +388,8 @@ watch(
 )
 onBeforeUnmount(() => {
   removeMenuListener()
+  removeSelectionListener()
+  bus.off('read-aloud-selection', startSelection)
   player.stop()
 })
 </script>

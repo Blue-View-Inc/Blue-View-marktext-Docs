@@ -238,6 +238,7 @@ export interface IpcSyncChannels {
 
 export interface IpcMainEventChannels extends StateIpcMainEvents {
   'mt::read-aloud': []
+  'mt::read-aloud-selection': []
   'mt::toggle-read-only': []
   'language-changed': [language: string]
   'mt::UPDATE_AVAILABLE': [info?: unknown]
