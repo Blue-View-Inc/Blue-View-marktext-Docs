@@ -12,7 +12,8 @@ encountering an error restores the full controls. **Hide controls** collapses
 them manually, and the auto-hide checkbox keeps them expanded when desired.
 
 The voice runs locally through Piper. Document text is never sent to a
-speech service. Code blocks and front matter are omitted; citations and reference
+speech service. Fenced, indented, HTML and code-only blocks and front matter are omitted;
+inline code within prose remains readable. Citations and reference
 sections can also be skipped. Speed changes preserve pitch. The next sentence is
 prepared during playback, and only adjacent audio is retained in memory.
 
@@ -61,12 +62,23 @@ trained models. Preview uses the document's first sentence; choosing a language
 does not translate the document. Some pronunciation frontends may download
 additional language data on first use; later synthesis runs locally.
 
+The relaxed preset adds 0.15 seconds between sentences and targets 0.4 seconds
+between paragraphs. Both pause sliders can go to zero. Existing calibrations
+that still match the original preset timings adopt the shorter defaults;
+custom timings remain unchanged. Near-silent padding is trimmed from each clip
+before adding the chosen pause.
+
 ## IPC and lifecycle
 
 The sandboxed renderer requests one bounded sentence through
-`mt::speech::synthesize`. Main passes it to the fixed Piper executable on stdin
-and returns WAV bytes. There is one active synthesis per renderer; canceling,
-navigating, closing the window, or quitting terminates that renderer's process.
+`mt::speech::synthesize`. Main sends a JSON line over stdin to a Piper worker
+that keeps the selected model loaded between sentences, and returns WAV bytes.
+Each response is a four-byte little-endian PCM byte count followed by mono
+16-bit PCM. Input, response sizes and request time are bounded. There is one
+active synthesis per renderer; canceling, navigating, closing the window, or
+quitting terminates that renderer's process. Idle workers expire after a minute.
+Voice or synthesis-setting changes replace the worker. Playback speed and
+paragraph timing do not require a new model load.
 The renderer owns audio playback and releases object URLs on stop. Generation
 counters keep late synthesis results from restarting canceled playback.
 

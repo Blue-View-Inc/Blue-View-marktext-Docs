@@ -112,7 +112,7 @@
         {{ t('readAloud.sentencePause') }}
         <input
           type="range"
-          min="0.1"
+          min="0"
           max="1"
           step="0.05"
           :value="modelValue.sentencePause"
@@ -125,14 +125,14 @@
         {{ t('readAloud.paragraphPause') }}
         <input
           type="range"
-          min="0.1"
+          min="0"
           max="2"
-          step="0.1"
+          step="0.05"
           :value="modelValue.paragraphPause"
           :aria-label="t('readAloud.paragraphPause')"
           @change="changeNumber('paragraphPause', $event)"
         >
-        <output>{{ modelValue.paragraphPause.toFixed(1) }} s</output>
+        <output>{{ modelValue.paragraphPause.toFixed(2) }} s</output>
       </label>
     </div>
     <details @toggle="showLicense">
@@ -162,6 +162,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import {
   recommendedSpeechVoices,
+  SPEECH_DELIVERY_PRESETS,
   type SpeechVoice,
   type SpeechVoiceSettings
 } from '@shared/types/speech'
@@ -242,12 +243,7 @@ const chooseSpeaker = (event: Event): void => {
 }
 const changeStyle = (event: Event): void => {
   const style = (event.target as HTMLSelectElement).value as SpeechVoiceSettings['style']
-  const presets = {
-    relaxed: { expression: 0.3, sentencePause: 0.3, paragraphPause: 0.7 },
-    neutral: { expression: 0.5, sentencePause: 0.2, paragraphPause: 0.5 },
-    expressive: { expression: 0.8, sentencePause: 0.15, paragraphPause: 0.35 }
-  }
-  emit('update:modelValue', { ...props.modelValue, style, ...presets[style] })
+  emit('update:modelValue', { ...props.modelValue, style, ...SPEECH_DELIVERY_PRESETS[style] })
 }
 const changeNumber = (
   key: 'expression' | 'sentencePause' | 'paragraphPause',

@@ -15,13 +15,17 @@ export interface SpeechVoiceSettings {
   rate: number
 }
 
+export const SPEECH_DELIVERY_PRESETS = {
+  relaxed: { expression: 0.3, sentencePause: 0.15, paragraphPause: 0.4 },
+  neutral: { expression: 0.5, sentencePause: 0.1, paragraphPause: 0.3 },
+  expressive: { expression: 0.8, sentencePause: 0.1, paragraphPause: 0.25 }
+}
+
 export const DEFAULT_SPEECH_SETTINGS: SpeechVoiceSettings = {
   voiceId: 'en_US-lessac-medium',
   speaker: 0,
   style: 'relaxed',
-  expression: 0.3,
-  sentencePause: 0.3,
-  paragraphPause: 0.7,
+  ...SPEECH_DELIVERY_PRESETS.relaxed,
   rate: 1
 }
 
@@ -39,10 +43,10 @@ export const validSpeechSettings = (value: unknown): value is SpeechVoiceSetting
     settings.expression >= 0 &&
     settings.expression <= 1 &&
     Number.isFinite(settings.sentencePause) &&
-    settings.sentencePause >= 0.1 &&
+    settings.sentencePause >= 0 &&
     settings.sentencePause <= 1 &&
     Number.isFinite(settings.paragraphPause) &&
-    settings.paragraphPause >= 0.1 &&
+    settings.paragraphPause >= 0 &&
     settings.paragraphPause <= 2 &&
     Number.isFinite(settings.rate) &&
     settings.rate >= 0.5 &&

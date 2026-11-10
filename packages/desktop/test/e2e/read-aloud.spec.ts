@@ -87,6 +87,30 @@ test('reads locally with sentence/paragraph navigation, pause and speed controls
   }
 })
 
+test('continues naturally across sentences while omitting code blocks', async() => {
+  test.setTimeout(60000)
+  const { app, page } = await launchWithMarkdown(
+    'A short beginning. The second sentence follows naturally.\n\n```js\nnever_read_this_code()\n```\n\nThe next paragraph is ready.'
+  )
+  try {
+    await page.evaluate(() => {
+      const play = HTMLMediaElement.prototype.play
+      HTMLMediaElement.prototype.play = function() {
+        this.muted = true
+        return play.call(this)
+      }
+    })
+    await page.getByRole('button', { name: 'Read Aloud', exact: true }).click()
+    await expect(page.locator('.reading-status')).toContainText('Sentence 1/3', { timeout: 30000 })
+    await expect(page.locator('.reading-status')).toContainText('Sentence 2/3', { timeout: 10000 })
+    await expect(page.locator('.reading-status')).toContainText('Sentence 3/3', { timeout: 10000 })
+    await expect(page.locator('.reading-status')).toHaveText('Finished', { timeout: 10000 })
+    await expect(page.locator('.reading-sentence')).toHaveText('The next paragraph is ready.')
+  } finally {
+    await app.close()
+  }
+})
+
 test('downloads a second-language voice and previews its calibration', async() => {
   test.skip(
     process.env.MARKTEXT_TEST_SPEECH_VOICES !== '1',

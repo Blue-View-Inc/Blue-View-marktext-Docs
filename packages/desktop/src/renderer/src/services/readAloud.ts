@@ -220,7 +220,7 @@ export class ReadAloudPlayer {
       const pause = Math.max(0, this.voice.paragraphPause - this.voice.sentencePause)
       this.gapTimer = setTimeout(() => {
         this.play()
-      }, pause * 1000)
+      }, pause * 1000 / this.state.rate)
     } else {
       this.play()
     }

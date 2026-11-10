@@ -7,6 +7,16 @@ beforeEach(() => {
 })
 
 describe('voice calibration preferences', () => {
+  it('updates legacy preset pauses while retaining custom settings', () => {
+    const legacy = { ...DEFAULT_SPEECH_SETTINGS, sentencePause: 0.3, paragraphPause: 0.7 }
+    localStorage.setItem('marktext.readAloud.current', JSON.stringify(legacy))
+    expect(loadSpeechCalibration()).toEqual(DEFAULT_SPEECH_SETTINGS)
+    localStorage.setItem('marktext.readAloud.current', JSON.stringify({ ...legacy, paragraphPause: 0.9 }))
+    expect(loadSpeechCalibration().paragraphPause).toBe(0.9)
+    saveSpeechCalibration(legacy)
+    expect(loadSpeechCalibration()).toEqual(legacy)
+  })
+
   it('remembers different settings for each voice and speaker', () => {
     const english = { ...DEFAULT_SPEECH_SETTINGS, rate: 0.9, expression: 0.25 }
     const spanish = { ...DEFAULT_SPEECH_SETTINGS, voiceId: 'es_ES-davefx-medium', rate: 1.1 }

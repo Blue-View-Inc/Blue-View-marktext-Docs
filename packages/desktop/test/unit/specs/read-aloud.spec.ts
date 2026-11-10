@@ -164,6 +164,22 @@ describe('Read Aloud playback', () => {
 })
 
 describe('readable Markdown', () => {
+  it.each([
+    '```typescript\nconst secret = 42\n```',
+    '~~~python\nprint("secret")\n~~~',
+    '    secret()',
+    '<pre><code>secret()</code></pre>',
+    '<div><code>secret()</code></div>',
+    '> ```js\n> secret()\n> ```',
+    '```mermaid\ngraph TD; A-->B\n```'
+  ])('skips a code block without dropping surrounding prose: %s', (block) => {
+    expect(readingSentences(`Before.\n\n${block}\n\nAfter.`).map(s => s.text)).toEqual(['Before.', 'After.'])
+  })
+
+  it('keeps inline code that belongs to a prose sentence', () => {
+    expect(readingSentences('Run `pnpm install` to begin.').map(s => s.text)).toEqual(['Run pnpm install to begin.'])
+  })
+
   it('retains sentences and paragraph boundaries without speaking formatting or link URLs', () => {
     const result = readingSentences(
       '# Heading\n\nHello **world**. Another sentence!\n\nRead [this link](https://example.com).'

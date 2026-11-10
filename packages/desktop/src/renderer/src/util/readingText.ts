@@ -33,6 +33,10 @@ export const readingSentences = (
   root
     .querySelectorAll('script, style, pre, svg, math, .katex, .front-matter, .frontmatter')
     .forEach((node) => node.remove())
+  for (const code of root.querySelectorAll('code')) {
+    const container = code.parentElement
+    if (container && container.textContent?.trim() === code.textContent?.trim()) code.remove()
+  }
   if (skipCitations) {
     root
       .querySelectorAll('.footnotes, [role="doc-noteref"], [role="doc-endnotes"], sup.footnote-ref')

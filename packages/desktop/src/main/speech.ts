@@ -1,4 +1,4 @@
-import { spawn, type ChildProcess } from 'node:child_process'
+import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process'
 import { access, readFile } from 'node:fs/promises'
 import { constants } from 'node:fs'
 import path from 'node:path'
@@ -12,8 +12,16 @@ import {
 import { knownSpeechVoice } from './speechVoices'
 
 interface Synthesis {
-  child?: ChildProcess
   finish(result: SpeechAudioResult): void
+}
+
+interface SpeechWorker {
+  child: ChildProcessWithoutNullStreams
+  key: string
+  sampleRate: number
+  pending?: Synthesis
+  buffer: Buffer
+  idle?: ReturnType<typeof setTimeout>
 }
 
 const MAX_AUDIO_BYTES = 8 * 1024 * 1024
@@ -21,18 +29,18 @@ const MAX_AUDIO_BYTES = 8 * 1024 * 1024
 /** Owns one cancellable synthesis per window; document text travels only through stdin. */
 export class SpeechSynthesizer {
   private readonly active = new Map<number, Synthesis>()
+  private readonly workers = new Map<number, SpeechWorker>()
 
   constructor(private readonly directories: string[]) {}
 
   cancel(owner: number): void {
-    const synthesis = this.active.get(owner)
-    if (!synthesis) return
-    synthesis.child?.kill()
-    synthesis.finish({ status: 'canceled' })
+    const worker = this.workers.get(owner)
+    if (worker) this.retire(owner, worker, { status: 'canceled' })
+    this.active.get(owner)?.finish({ status: 'canceled' })
   }
 
   cancelAll(): void {
-    for (const owner of this.active.keys()) this.cancel(owner)
+    for (const owner of new Set([...this.active.keys(), ...this.workers.keys()])) this.cancel(owner)
   }
 
   async synthesize(
@@ -49,7 +57,7 @@ export class SpeechSynthesizer {
     ) {
       return { status: 'error', reason: 'invalid' }
     }
-    this.cancel(owner)
+    if (this.active.has(owner)) this.cancel(owner)
 
     return new Promise((resolve) => {
       const synthesis: Synthesis = {
@@ -62,11 +70,14 @@ export class SpeechSynthesizer {
       }
       this.active.set(owner, synthesis)
       const timer = setTimeout(() => {
-        synthesis.child?.kill()
+        const worker = this.workers.get(owner)
+        if (worker?.pending === synthesis) this.retire(owner, worker)
         synthesis.finish({ status: 'error', reason: 'failed' })
       }, 60_000)
 
       void this.run(owner, text, synthesis, voice).catch(() => {
+        const worker = this.workers.get(owner)
+        if (worker?.pending === synthesis) this.retire(owner, worker)
         synthesis.finish({ status: 'error', reason: 'failed' })
       })
     })
@@ -137,50 +148,78 @@ export class SpeechSynthesizer {
       return
     }
 
-    const child = spawn(
-      engine.executable,
-      [
-        ...engine.prefix,
-        '--model',
-        engine.model,
-        '--output_raw',
-        '--length_scale',
-        String({ relaxed: 1.1, neutral: 1, expressive: 0.95 }[voice.style]),
-        '--noise_scale',
-        String(0.3 + voice.expression * 0.5),
-        '--noise_w',
-        String(0.45 + voice.expression * 0.4),
-        '--sentence_silence',
-        String(voice.sentencePause),
-        '--speaker',
-        String(voice.speaker)
-      ],
-      { stdio: ['pipe', 'pipe', 'ignore'], windowsHide: true }
-    )
-    synthesis.child = child
-    const chunks: Buffer[] = []
-    let size = 0
-    const sampleRate = engine.sampleRate
-    child.stdout.on('data', (chunk: Buffer) => {
-      size += chunk.length
-      if (size > MAX_AUDIO_BYTES) {
-        child.kill()
-        synthesis.finish({ status: 'error', reason: 'failed' })
-        return
-      }
-      chunks.push(chunk)
-    })
-    child.on('error', () => synthesis.finish({ status: 'error', reason: 'failed' }))
-    child.stdin.on('error', () => {
-      child.kill()
-      synthesis.finish({ status: 'error', reason: 'failed' })
-    })
-    child.on('close', (code) => {
-      if (code !== 0 || size === 0 || size % 2 !== 0) {
-        synthesis.finish({ status: 'error', reason: 'failed' })
-        return
-      }
-      const pcm = Buffer.concat(chunks)
+    const args = [
+      ...engine.prefix,
+      '--model',
+      engine.model,
+      '--server',
+      '--length_scale',
+      String({ relaxed: 1.1, neutral: 1, expressive: 0.95 }[voice.style]),
+      '--noise_scale',
+      String(0.3 + voice.expression * 0.5),
+      '--noise_w',
+      String(0.45 + voice.expression * 0.4),
+      '--sentence_silence',
+      String(voice.sentencePause),
+      '--speaker',
+      String(voice.speaker)
+    ]
+    const key = JSON.stringify([engine.executable, args])
+    let worker = this.workers.get(owner)
+    if (worker && worker.key !== key) {
+      this.retire(owner, worker)
+      worker = undefined
+    }
+    if (!worker) {
+      const child = spawn(engine.executable, args, {
+        stdio: 'pipe',
+        windowsHide: true
+      })
+      worker = { child, key, sampleRate: engine.sampleRate, buffer: Buffer.alloc(0) }
+      const session = worker
+      this.workers.set(owner, session)
+      child.stdout.on('data', (chunk: Buffer) => this.receive(owner, session, chunk))
+      child.stderr.resume()
+      child.on('error', () => this.retire(owner, session))
+      child.stdin.on('error', () => this.retire(owner, session))
+      child.on('close', () => this.retire(owner, session))
+    }
+    clearTimeout(worker.idle)
+    worker.pending = synthesis
+    worker.child.stdin.write(JSON.stringify({ text: text.replace(/\s*\n\s*/g, ' ') }) + '\n')
+  }
+
+  private retire(
+    owner: number,
+    worker: SpeechWorker,
+    result: SpeechAudioResult = { status: 'error', reason: 'failed' }
+  ): void {
+    if (this.workers.get(owner) !== worker) return
+    this.workers.delete(owner)
+    clearTimeout(worker.idle)
+    worker.child.kill()
+    worker.pending?.finish(result)
+    worker.pending = undefined
+    worker.buffer = Buffer.alloc(0)
+  }
+
+  private receive(owner: number, worker: SpeechWorker, chunk: Buffer): void {
+    if (this.workers.get(owner) !== worker) return
+    if (!worker.pending || worker.buffer.length + chunk.length > MAX_AUDIO_BYTES + 4) {
+      this.retire(owner, worker)
+      return
+    }
+    worker.buffer = Buffer.concat([worker.buffer, chunk])
+    if (worker.buffer.length < 4) return
+    // Each request produces one little-endian byte count followed by mono int16 PCM.
+    const size = worker.buffer.readUInt32LE(0)
+    if (!size || size > MAX_AUDIO_BYTES || size % 2 || worker.buffer.length > size + 4) {
+      this.retire(owner, worker)
+      return
+    }
+    if (worker.buffer.length === size + 4) {
+      const pcm = worker.buffer.subarray(4)
+      const sampleRate = worker.sampleRate
       const header = Buffer.alloc(44)
       header.write('RIFF', 0)
       header.writeUInt32LE(36 + pcm.length, 4)
@@ -194,8 +233,11 @@ export class SpeechSynthesizer {
       header.writeUInt16LE(16, 34)
       header.write('data', 36)
       header.writeUInt32LE(pcm.length, 40)
-      synthesis.finish({ status: 'ready', audio: new Uint8Array(Buffer.concat([header, pcm])) })
-    })
-    child.stdin.end(text.replace(/\s*\n\s*/g, ' ') + '\n')
+      const pending = worker.pending
+      worker.pending = undefined
+      worker.buffer = Buffer.alloc(0)
+      worker.idle = setTimeout(() => this.retire(owner, worker), 60_000)
+      pending.finish({ status: 'ready', audio: new Uint8Array(Buffer.concat([header, pcm])) })
+    }
   }
 }

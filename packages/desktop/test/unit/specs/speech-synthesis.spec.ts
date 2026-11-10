@@ -15,7 +15,8 @@ import { SpeechSynthesizer } from 'main_renderer/speech'
 const child = () =>
   Object.assign(new EventEmitter(), {
     stdout: new EventEmitter(),
-    stdin: Object.assign(new EventEmitter(), { end: vi.fn() }),
+    stdin: Object.assign(new EventEmitter(), { write: vi.fn() }),
+    stderr: { resume: vi.fn() },
     kill: vi.fn()
   })
 let synthesizer: SpeechSynthesizer
@@ -31,15 +32,58 @@ afterEach(() => {
 })
 
 describe('offline speech synthesis', () => {
+  it('reuses the loaded voice for consecutive sentences and accepts split frames', async() => {
+    const process = child()
+    spawn.mockReturnValue(process)
+    const first = synthesizer.synthesize(1, 'First sentence.')
+    await vi.waitFor(() => expect(process.stdin.write).toHaveBeenCalledOnce())
+    process.stdout.emit('data', Buffer.from([2, 0]))
+    process.stdout.emit('data', Buffer.from([0, 0, 1, 0]))
+    expect((await first).status).toBe('ready')
+    const second = synthesizer.synthesize(1, 'Second sentence.')
+    await vi.waitFor(() => expect(process.stdin.write).toHaveBeenCalledTimes(2))
+    expect(spawn).toHaveBeenCalledOnce()
+    process.stdout.emit('data', Buffer.from([2, 0, 0, 0, 2, 0]))
+    expect((await second).status).toBe('ready')
+    synthesizer.cancel(1)
+    expect(process.kill).toHaveBeenCalledOnce()
+  })
+
+  it('rejects invalid frame sizes and replaces a failed worker', async() => {
+    const first = child()
+    const second = child()
+    spawn.mockReturnValueOnce(first).mockReturnValueOnce(second)
+    const one = synthesizer.synthesize(1, 'First sentence.')
+    await vi.waitFor(() => expect(first.stdin.write).toHaveBeenCalledOnce())
+    first.stdout.emit('data', Buffer.from([255, 255, 255, 255]))
+    expect(await one).toEqual({ status: 'error', reason: 'failed' })
+    expect(first.kill).toHaveBeenCalledOnce()
+    const two = synthesizer.synthesize(1, 'Retry.')
+    await vi.waitFor(() => expect(second.stdin.write).toHaveBeenCalledOnce())
+    first.emit('close', 0)
+    second.stdout.emit('data', Buffer.from([2, 0, 0, 0, 1, 0]))
+    expect((await two).status).toBe('ready')
+  })
+
+  it('releases an idle model when the window stops reading', async() => {
+    const process = child()
+    spawn.mockReturnValue(process)
+    const result = synthesizer.synthesize(1, 'Done.')
+    await vi.waitFor(() => expect(process.stdin.write).toHaveBeenCalledOnce())
+    process.stdout.emit('data', Buffer.from([2, 0, 0, 0, 1, 0]))
+    await result
+    synthesizer.cancelAll()
+    expect(process.kill).toHaveBeenCalledOnce()
+  })
+
   it('passes document text through stdin and returns a valid mono WAV', async() => {
     const process = child()
     spawn.mockReturnValue(process)
     const result = synthesizer.synthesize(1, 'Hello $(touch /tmp/no).')
     await vi.waitFor(() => expect(spawn).toHaveBeenCalledOnce())
     expect(spawn.mock.calls[0][1]).not.toContain('Hello $(touch /tmp/no).')
-    expect(process.stdin.end).toHaveBeenCalledWith('Hello $(touch /tmp/no).\n')
-    process.stdout.emit('data', Buffer.from([1, 0, 2, 0]))
-    process.emit('close', 0)
+    expect(process.stdin.write).toHaveBeenCalledWith(JSON.stringify({ text: 'Hello $(touch /tmp/no).' }) + '\n')
+    process.stdout.emit('data', Buffer.from([4, 0, 0, 0, 1, 0, 2, 0]))
     const response = await result
     expect(response.status).toBe('ready')
     if (response.status !== 'ready') throw new Error('Missing audio')
@@ -62,8 +106,7 @@ describe('offline speech synthesis', () => {
     expect(first.kill).toHaveBeenCalledOnce()
     expect(second.kill).not.toHaveBeenCalled()
     first.emit('close', 0)
-    second.stdout.emit('data', Buffer.from([1, 0]))
-    second.emit('close', 0)
+    second.stdout.emit('data', Buffer.from([2, 0, 0, 0, 1, 0]))
     expect((await two).status).toBe('ready')
   })
 
