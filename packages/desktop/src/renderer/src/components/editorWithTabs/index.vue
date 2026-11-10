@@ -1,9 +1,13 @@
 <template>
   <div
     class="editor-with-tabs"
-    :style="{ 'max-width': `calc(100vw - ${effectiveSideBarWidth}px)`, '--editor-min-width': `${MIN_EDITOR_WIDTH}px` }"
+    :style="{
+      'max-width': `calc(100vw - ${effectiveSideBarWidth}px)`,
+      '--editor-min-width': `${MIN_EDITOR_WIDTH}px`
+    }"
   >
     <tabs v-show="showTabBar" />
+    <read-aloud />
     <div class="container">
       <document-outline />
       <div class="document-body">
@@ -34,6 +38,7 @@ import Tabs from './tabs.vue'
 import Editor from './editor.vue'
 import SourceCode from './sourceCode.vue'
 import TabNotifications from './notifications.vue'
+import ReadAloud from './readAloud.vue'
 
 defineProps<{
   markdown: string

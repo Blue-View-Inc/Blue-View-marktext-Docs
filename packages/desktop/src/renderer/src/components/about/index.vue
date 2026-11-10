@@ -9,13 +9,19 @@
     >
       <img
         class="logo"
-        :src="MarkTextLogo"
+        :src="isDarkThemeId(preferences.theme) ? BlueViewDarkLogo : BlueViewLogo"
+        :alt="APP_NAME"
       >
       <el-row>
         <el-col :span="24">
           <h3 class="title">
             {{ name }}
           </h3>
+        </el-col>
+        <el-col :span="24">
+          <div class="text">
+            {{ t('about.upstreamAttribution') }}
+          </div>
         </el-col>
         <el-col :span="24">
           <div class="text">
@@ -44,12 +50,17 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useMainStore } from '@/store'
 import bus from '../../bus'
-import MarkTextLogo from '../../assets/images/logo.png'
+import BlueViewLogo from '../../../../../static/brand/truedocs/truedocs-mark.svg?url'
+import BlueViewDarkLogo from '../../../../../static/brand/truedocs/truedocs-mark-dark.svg?url'
+import { APP_NAME } from 'common/brand'
+import { isDarkThemeId } from 'common/theme'
+import { usePreferencesStore } from '@/store/preferences'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 
-const name = 'MarkText'
+const name = APP_NAME
+const preferences = usePreferencesStore()
 const copyright = t('about.copyright', { year: new Date().getFullYear() })
 const copyrightContributors = t('about.copyrightContributors')
 const showAboutDialog = ref(false)
@@ -77,8 +88,8 @@ onBeforeUnmount(() => {
 }
 
 .about-dialog img.logo {
-  width: 80px;
-  height: 80px;
+  width: 96px;
+  height: 96px;
   display: inherit;
   margin: 0 auto;
 }

@@ -1,4 +1,5 @@
 export const railscastsThemes: readonly string[] = Object.freeze([
+  'blueview-dark',
   'dark',
   'material-dark',
   'dracula',
@@ -39,6 +40,8 @@ export const resolveMermaidTheme = (
 
 // Keep window backgrounds aligned with renderer theme variables to avoid startup flashes.
 const themeBackgroundColors: ReadonlyMap<string, string> = new Map([
+  ['blueview-light', '#fbfdff'],
+  ['blueview-dark', '#141a16'],
   ['ayu-dark', '#0a0e14'],
   ['ayu-light', '#fafafa'],
   ['ayu-mirage', '#1f2430'],

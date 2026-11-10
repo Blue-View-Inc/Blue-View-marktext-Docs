@@ -1,4 +1,4 @@
-const APP_NAME = 'MarkText'
+import { APP_NAME } from 'common/brand'
 
 // Linux/Windows window managers, taskbars and task switchers identify the
 // application from the trailing "- AppName" of the title. macOS already shows

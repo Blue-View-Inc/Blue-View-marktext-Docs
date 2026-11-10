@@ -6,3 +6,5 @@ packages/muya/
 # pnpm owns this file's formatting; Prettier reformats it wholesale and pnpm
 # rewrites it back on the next install, so the churn is pure noise.
 pnpm-lock.yaml
+packages/desktop/static/speech/
+packages/desktop/src/renderer/src/assets/blueview-design/

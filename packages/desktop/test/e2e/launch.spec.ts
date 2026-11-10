@@ -17,7 +17,7 @@ test.describe('Check Launch MarkText', () => {
   })
 
   test('Empty MarkText', async() => {
-    const title = process.platform === 'darwin' ? 'Untitled-1' : 'Untitled-1 - MarkText'
+    const title = process.platform === 'darwin' ? 'Untitled-1' : 'Untitled-1 - Blue View'
     await expect(page).toHaveTitle(title)
   })
 })

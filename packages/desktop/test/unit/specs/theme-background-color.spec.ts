@@ -13,6 +13,7 @@ describe('theme launch background colour (#3957)', () => {
   })
 
   it('maps representative dark themes to their own editor background', () => {
+    expect(getThemeBackgroundColor('blueview-dark')).toBe('#141a16')
     expect(getThemeBackgroundColor('dracula')).toBe('#282a36')
     expect(getThemeBackgroundColor('nord')).toBe('#2e3440')
     expect(getThemeBackgroundColor('tokyo-night')).toBe('#1a1b26')

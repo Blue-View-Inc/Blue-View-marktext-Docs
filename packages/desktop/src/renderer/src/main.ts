@@ -17,11 +17,12 @@ import Main from './Main.vue'
 
 import './assets/styles/index.css'
 import './assets/styles/printService.css'
-
+import '@fontsource-variable/inter'
+import '@fontsource-variable/manrope'
+import './assets/styles/blueview.css'
 
 window.marktext = {}
 bootstrapRenderer()
-
 
 const app: App<Element> = createApp(Main)
 

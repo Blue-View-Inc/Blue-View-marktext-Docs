@@ -103,6 +103,13 @@ export default function(keybindings: Keybindings): MenuItemConstructorOptions {
         }
       },
       {
+        id: 'readAloudMenuItem',
+        label: t('readAloud.title'),
+        click(_menuItem, browserWindow) {
+          actions.readAloud(browserWindow as BrowserWindow | undefined)
+        }
+      },
+      {
         type: 'separator'
       },
       {

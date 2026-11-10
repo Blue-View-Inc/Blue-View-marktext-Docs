@@ -1,5 +1,5 @@
-appId: com.github.marktext.marktext
-productName: MarkText
+appId: ai.blueview.markdown
+productName: Blue View
 directories:
   buildResources: build
   output: ../../dist
@@ -32,6 +32,14 @@ files:
   - '!jsconfig.json'
   - '!docs/*'
 extraResources:
+  - from: ../../LICENSES/MarkText-MIT.txt
+    to: licenses/MarkText-MIT.txt
+  - from: ../../LICENSE-BLUEVIEW-NONCOMMERCIAL.txt
+    to: licenses/BlueView-NonCommercial.txt
+  - from: ../../LICENSES
+    to: licenses
+  - from: ../../THIRD_PARTY_NOTICES.md
+    to: licenses/THIRD_PARTY_NOTICES.md
   - from: build/icons
     to: icons
     filter:
@@ -117,14 +125,14 @@ fileAssociations:
     role: Editor
     icon: icons/md.ico
 win:
-  executableName: marktext
-  artifactName: 'marktext-win-${arch}-${version}.${ext}'
+  executableName: blueview
+  artifactName: 'blueview-win-${arch}-${version}.${ext}'
   target:
     - target: 'nsis'
     - target: 'zip'
-  icon: static/icon.ico
+  icon: static/blue-view-icon.png
 nsis:
-  artifactName: 'marktext-win-${arch}-${version}-setup.${ext}'
+  artifactName: 'blueview-win-${arch}-${version}-setup.${ext}'
   shortcutName: ${productName}
   uninstallDisplayName: ${productName}
   createDesktopShortcut: true
@@ -134,19 +142,19 @@ nsis:
   perMachine: false
   include: windows/installer.nsh
 mac:
-  artifactName: 'marktext-mac-${arch}-${version}.${ext}'
+  artifactName: 'blueview-mac-${arch}-${version}.${ext}'
   entitlementsInherit: build/mac/entitlements.mac.plist
   extendInfo:
     - NSCameraUsageDescription: Application requests access to the device's camera.
     - NSDocumentsFolderUsageDescription: Application requests access to the user's Documents folder.
     - NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.
-  icon: static/icon.icns
+  icon: static/blue-view-icon.png
   notarize: false
   target:
     - dmg
     - zip
 dmg:
-  artifactName: 'marktext-mac-${arch}-${version}.${ext}'
+  artifactName: 'blueview-mac-${arch}-${version}.${ext}'
   contents:
     - x: 410
       y: 240
@@ -156,18 +164,18 @@ dmg:
       y: 240
       type: 'file'
 linux:
-  artifactName: 'marktext-linux-${version}.${ext}'
-  executableName: 'marktext'
-  description: 'A simple and elegant open-source markdown editor that focused on speed and usability.'
+  artifactName: 'blueview-linux-${version}.${ext}'
+  executableName: 'blueview'
+  description: 'Markdown editor with offline read-aloud and customizable multilingual voices.'
   maintainer: 'MarkText Contributors'
   category: 'Office;TextEditor;Utility'
   mimeTypes:
     - 'text/markdown'
-  icon: 'static/icon.png'
+  icon: 'static/blue-view-icon.png'
   desktop:
     entry:
-      StartupWMClass: 'marktext'
-      Keywords: 'marktext;'
+      StartupWMClass: 'blueview'
+      Keywords: 'blueview;markdown;read-aloud;'
   target:
     - AppImage
     - snap

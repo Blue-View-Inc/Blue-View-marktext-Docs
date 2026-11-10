@@ -3,6 +3,8 @@ export interface ThemeDescriptor {
 }
 
 export const themes: ReadonlyArray<ThemeDescriptor> = [
+  { name: 'blueview-light' },
+  { name: 'blueview-dark' },
   // Light Themes (alphabetical)
   { name: 'ayu-light' },
   { name: 'light' },
@@ -40,5 +42,8 @@ export const themes: ReadonlyArray<ThemeDescriptor> = [
   { name: 'tokyo-night-storm' }
 ]
 
-export const themeLabel = (name: string): string => name.split('-')
-  .map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+export const themeLabel = (name: string): string =>
+  name
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ')

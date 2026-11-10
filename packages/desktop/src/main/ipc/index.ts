@@ -12,6 +12,7 @@ import { registerDialogHandlers } from './dialog'
 import { registerDiagramHandlers } from './diagram'
 import { registerLinkHtmlHandler } from './linkHtml'
 import { registerImageClipboardHandlers } from './clipboardImage'
+import { registerSpeechHandlers } from './speech'
 
 export const registerSandboxIpcHandlers = (fileOperations?: FileOperations): void => {
   registerBootInfo()
@@ -28,4 +29,5 @@ export const registerSandboxIpcHandlers = (fileOperations?: FileOperations): voi
   registerDiagramHandlers()
   registerLinkHtmlHandler()
   registerImageClipboardHandlers()
+  registerSpeechHandlers()
 }

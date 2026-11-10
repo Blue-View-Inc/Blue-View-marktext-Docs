@@ -108,15 +108,15 @@
       "checkUpdates": "Buscar Actualizaciones"
     },
     "marktext": {
-      "title": "MarkText",
-      "about": "Acerca de MarkText",
+      "title": "Blue View",
+      "about": "Acerca de Blue View",
       "checkUpdates": "Buscar Actualizaciones...",
       "preferences": "Preferencias",
       "services": "Servicios",
-      "hide": "Ocultar MarkText",
+      "hide": "Ocultar Blue View",
       "hideOthers": "Ocultar Otros",
       "showAll": "Mostrar",
-      "quit": "Salir de MarkText"
+      "quit": "Salir de Blue View"
     },
     "view": {
       "view": "Ver",
@@ -184,7 +184,9 @@
       "tokyoNight": "Tokyo Night",
       "tokyoNightLight": "Tokyo Night Claro",
       "tokyoNightStorm": "Tokyo Night Storm",
-      "ulyssesLight": "Ulises Claro"
+      "ulyssesLight": "Ulises Claro",
+      "blueviewLight": "Blue View Light",
+      "blueviewDark": "Blue View Dark"
     }
   },
   "contextMenu": {
@@ -293,7 +295,7 @@
       "conflict": "The destination already contains an item with this name. Rename it before trying again.",
       "missing": "The source or destination no longer exists. Refresh the folder and try again.",
       "permission": "The item could not be moved. Check folder permissions and whether another application is using it.",
-      "openElsewhere": "Close this file and any documents inside this folder in other MarkText windows before moving it.",
+      "openElsewhere": "Close this file and any documents inside this folder in other Blue View windows before moving it.",
       "destinationOpen": "A document is already open at the destination path. Close it before trying again."
     }
   },
@@ -310,7 +312,9 @@
       "lastModified": "Modificado",
       "unavailable": "—",
       "open": "Abrir estadísticas del documento"
-    }
+    },
+    "useDarkMode": "Use dark mode",
+    "useLightMode": "Use light mode"
   },
   "commandPalette": {
     "placeholder": "Escriba un comando para ejecutar",
@@ -410,7 +414,7 @@
   },
   "import": {
     "title": "Importar o Abrir",
-    "description": "Arrastra aquí para obtener tu contenido en MarkText"
+    "description": "Arrastra aquí para obtener tu contenido en Blue View"
   },
   "preferences": {
     "title": "Preferencias",
@@ -633,7 +637,7 @@
         "lastSuccessTime": "Última vez exitosa",
         "invalidScript": "Introduce la ruta de un script existente y ejecutable."
       },
-      "defaultBehavior": "El comportamiento predeterminado después de pegar o arrastrar la imagen a MarkText"
+      "defaultBehavior": "El comportamiento predeterminado después de pegar o arrastrar la imagen a Blue View"
     },
     "markdown": {
       "title": "Markdown",
@@ -664,10 +668,10 @@
           "simple": "Simple"
         },
         "mermaidLightTheme": {
-          "title": "Tema de Mermaid para temas claros de MarkText"
+          "title": "Tema de Mermaid para temas claros de Blue View"
         },
         "mermaidDarkTheme": {
-          "title": "Tema de Mermaid para temas oscuros de MarkText"
+          "title": "Tema de Mermaid para temas oscuros de Blue View"
         },
         "plantumlServer": {
           "title": "URL del servidor PlantUML"
@@ -778,11 +782,12 @@
   },
   "about": {
     "copyright": "Derechos de autor © Luo Ran 2017-{year}",
-    "copyrightContributors": "Derechos de Autor Contribuidores"
+    "copyrightContributors": "Derechos de Autor Contribuidores",
+    "upstreamAttribution": "Blue View edition · Based on MarkText"
   },
   "commands": {
     "mt": {
-      "hide": "Ocultar MarkText",
+      "hide": "Ocultar Blue View",
       "hideOthers": "Ocultar Otros"
     },
     "file": {
@@ -939,7 +944,7 @@
     "fileExists": "El archivo {filename} ya existe",
     "files": "Archivos",
     "importWarning": "Advertencia de importación",
-    "installPandoc": "No se encontró Pandoc. Instálalo, o define la variable de entorno MARKTEXT_PANDOC con la ruta del ejecutable de pandoc y reinicia MarkText.",
+    "installPandoc": "No se encontró Pandoc. Instálalo, o define la variable de entorno MARKTEXT_PANDOC con la ruta del ejecutable de pandoc y reinicia Blue View.",
     "exportWarning": "Advertencia de exportación",
     "exportWarningMore": "…y {count} más",
     "keepOpen": "Mantener abierto",
@@ -956,7 +961,7 @@
     "configSchemaViolation": "Violación del esquema de configuración",
     "copyError": "Error de copia",
     "initializationFailed": "Falló la inicialización {hint}",
-    "otherInstanceDetected": "Otra instancia de MarkText ya está ejecutándose",
+    "otherInstanceDetected": "Otra instancia de Blue View ya está ejecutándose",
     "report": "Reportar",
     "startupError": "Error de inicio",
     "terminatedDueToError": "Terminado debido a error",
@@ -1060,5 +1065,56 @@
     "viewImage": "Ver imagen",
     "copyLink": "Copiar dirección del enlace",
     "resumed": "El modo de edición está activado. Se ha reanudado el guardado automático."
+  },
+  "readAloud": {
+    "title": "Read Aloud",
+    "playback": "Reading controls",
+    "previousParagraph": "Previous paragraph",
+    "nextParagraph": "Next paragraph",
+    "previousSentence": "Previous sentence",
+    "nextSentence": "Next sentence",
+    "play": "Play",
+    "pause": "Pause",
+    "stop": "Stop reading",
+    "speed": "Speed",
+    "normalSpeed": "1×",
+    "skipCitations": "Skip citations and bibliography",
+    "progress": "Sentence {sentence}/{sentences} · Paragraph {paragraph}/{paragraphs}",
+    "loading": "Preparing voice…",
+    "paused": "Paused",
+    "stopped": "Stopped",
+    "finished": "Finished",
+    "error": "Unable to read",
+    "empty": "There is no readable text in this document.",
+    "unavailable": "Download the selected voice in Voice and calibration to enable Read Aloud.",
+    "failed": "Read Aloud could not play this sentence. Press Play to try again.",
+    "tuneVoice": "Voice and calibration",
+    "readDocument": "Read document",
+    "language": "Language",
+    "voice": "Voice",
+    "speaker": "Speaker",
+    "installed": "Ready",
+    "downloadVoice": "Download voice ({size} MB)",
+    "downloading": "Downloading voice…",
+    "preview": "Preview voice",
+    "showAllVoices": "Show all voice models",
+    "voiceHelp": "Recommended voices use the catalog’s quality ratings. Preview reads this document’s first sentence. Choose a voice that matches the document language; it does not translate. Some languages may download additional pronunciation data on first use.",
+    "downloadFailed": "The voice could not be downloaded. Check your connection and try again.",
+    "style": "Delivery",
+    "relaxed": "Warm and relaxed",
+    "neutral": "Clear and neutral",
+    "expressive": "Brisk and expressive",
+    "expression": "Expression",
+    "sentencePause": "Sentence pause",
+    "paragraphPause": "Paragraph pause",
+    "voiceLicense": "Voice license and model card",
+    "licenseHelp": "This voice has its own terms. Availability does not mean unrestricted commercial use. See the model card and its dataset license.",
+    "loadingLicense": "Loading license details…",
+    "licenseUnavailable": "License details could not be loaded. Open the model card to review the terms.",
+    "openModelCard": "Open model card",
+    "showControls": "Show controls",
+    "hideControls": "Hide controls",
+    "autoHideControls": "Automatically hide controls during playback",
+    "engineLicense": "Speech engine license (GPL-3.0-or-later)"
   }
 }

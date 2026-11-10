@@ -108,15 +108,15 @@
       "checkUpdates": "更新の確認"
     },
     "marktext": {
-      "title": "MarkText",
-      "about": "MarkText について",
+      "title": "Blue View",
+      "about": "Blue View について",
       "checkUpdates": "更新の確認...",
       "preferences": "環境設定",
       "services": "サービス",
-      "hide": "MarkText を隠す",
+      "hide": "Blue View を隠す",
       "hideOthers": "他を隠す",
       "showAll": "すべて表示",
-      "quit": "MarkText を終了"
+      "quit": "Blue View を終了"
     },
     "view": {
       "view": "表示",
@@ -184,7 +184,9 @@
       "tokyoNight": "Tokyo Night",
       "tokyoNightLight": "Tokyo Night ライト",
       "tokyoNightStorm": "Tokyo Night Storm",
-      "ulyssesLight": "Ulysses ライト"
+      "ulyssesLight": "Ulysses ライト",
+      "blueviewLight": "Blue View Light",
+      "blueviewDark": "Blue View Dark"
     }
   },
   "contextMenu": {
@@ -293,7 +295,7 @@
       "conflict": "The destination already contains an item with this name. Rename it before trying again.",
       "missing": "The source or destination no longer exists. Refresh the folder and try again.",
       "permission": "The item could not be moved. Check folder permissions and whether another application is using it.",
-      "openElsewhere": "Close this file and any documents inside this folder in other MarkText windows before moving it.",
+      "openElsewhere": "Close this file and any documents inside this folder in other Blue View windows before moving it.",
       "destinationOpen": "A document is already open at the destination path. Close it before trying again."
     }
   },
@@ -310,7 +312,9 @@
       "lastModified": "変更日時",
       "unavailable": "—",
       "open": "文書の統計を開く"
-    }
+    },
+    "useDarkMode": "Use dark mode",
+    "useLightMode": "Use light mode"
   },
   "commandPalette": {
     "placeholder": "実行するコマンドの入力",
@@ -410,7 +414,7 @@
   },
   "import": {
     "title": "インポートまたは開く",
-    "description": "ここにドラッグして MarkText にコンテンツをインポート"
+    "description": "ここにドラッグして Blue View にコンテンツをインポート"
   },
   "preferences": {
     "title": "環境設定",
@@ -633,7 +637,7 @@
         "lastSuccessTime": "最後の成功時刻",
         "invalidScript": "存在する実行可能なスクリプトのパスを入力してください。"
       },
-      "defaultBehavior": "MarkText に画像を貼り付けまたはドラッグした後のデフォルト動作"
+      "defaultBehavior": "Blue View に画像を貼り付けまたはドラッグした後のデフォルト動作"
     },
     "markdown": {
       "title": "Markdown",
@@ -664,10 +668,10 @@
           "simple": "シンプル"
         },
         "mermaidLightTheme": {
-          "title": "MarkText のライトテーマ用 Mermaid テーマ"
+          "title": "Blue View のライトテーマ用 Mermaid テーマ"
         },
         "mermaidDarkTheme": {
-          "title": "MarkText のダークテーマ用 Mermaid テーマ"
+          "title": "Blue View のダークテーマ用 Mermaid テーマ"
         },
         "plantumlServer": {
           "title": "PlantUML サーバーの URL"
@@ -778,11 +782,12 @@
   },
   "about": {
     "copyright": "Copyright © Luo Ran 2017-{year}",
-    "copyrightContributors": "著作権貢献者"
+    "copyrightContributors": "著作権貢献者",
+    "upstreamAttribution": "Blue View edition · Based on MarkText"
   },
   "commands": {
     "mt": {
-      "hide": "MarkText を隠す",
+      "hide": "Blue View を隠す",
       "hideOthers": "他を隠す"
     },
     "file": {
@@ -939,7 +944,7 @@
     "fileExists": "ファイルが既に存在します: {filename}",
     "files": "ファイル",
     "importWarning": "インポート警告",
-    "installPandoc": "Pandoc が見つかりません。インストールするか、環境変数 MARKTEXT_PANDOC に pandoc の実行ファイルのパスを設定して MarkText を再起動してください。",
+    "installPandoc": "Pandoc が見つかりません。インストールするか、環境変数 MARKTEXT_PANDOC に pandoc の実行ファイルのパスを設定して Blue View を再起動してください。",
     "exportWarning": "エクスポートの警告",
     "exportWarningMore": "…ほか {count} 件",
     "keepOpen": "開いたままにする",
@@ -956,7 +961,7 @@
     "configSchemaViolation": "設定スキーマ違反",
     "copyError": "コピーエラー",
     "initializationFailed": "初期化に失敗しました {hint}",
-    "otherInstanceDetected": "MarkText の別のインスタンスが既に実行中です",
+    "otherInstanceDetected": "Blue View の別のインスタンスが既に実行中です",
     "report": "報告",
     "startupError": "起動エラー",
     "terminatedDueToError": "エラーにより終了",
@@ -1060,5 +1065,56 @@
     "viewImage": "画像を表示",
     "copyLink": "リンクのアドレスをコピー",
     "resumed": "編集モードになりました。自動保存を再開しました。"
+  },
+  "readAloud": {
+    "title": "Read Aloud",
+    "playback": "Reading controls",
+    "previousParagraph": "Previous paragraph",
+    "nextParagraph": "Next paragraph",
+    "previousSentence": "Previous sentence",
+    "nextSentence": "Next sentence",
+    "play": "Play",
+    "pause": "Pause",
+    "stop": "Stop reading",
+    "speed": "Speed",
+    "normalSpeed": "1×",
+    "skipCitations": "Skip citations and bibliography",
+    "progress": "Sentence {sentence}/{sentences} · Paragraph {paragraph}/{paragraphs}",
+    "loading": "Preparing voice…",
+    "paused": "Paused",
+    "stopped": "Stopped",
+    "finished": "Finished",
+    "error": "Unable to read",
+    "empty": "There is no readable text in this document.",
+    "unavailable": "Download the selected voice in Voice and calibration to enable Read Aloud.",
+    "failed": "Read Aloud could not play this sentence. Press Play to try again.",
+    "tuneVoice": "Voice and calibration",
+    "readDocument": "Read document",
+    "language": "Language",
+    "voice": "Voice",
+    "speaker": "Speaker",
+    "installed": "Ready",
+    "downloadVoice": "Download voice ({size} MB)",
+    "downloading": "Downloading voice…",
+    "preview": "Preview voice",
+    "showAllVoices": "Show all voice models",
+    "voiceHelp": "Recommended voices use the catalog’s quality ratings. Preview reads this document’s first sentence. Choose a voice that matches the document language; it does not translate. Some languages may download additional pronunciation data on first use.",
+    "downloadFailed": "The voice could not be downloaded. Check your connection and try again.",
+    "style": "Delivery",
+    "relaxed": "Warm and relaxed",
+    "neutral": "Clear and neutral",
+    "expressive": "Brisk and expressive",
+    "expression": "Expression",
+    "sentencePause": "Sentence pause",
+    "paragraphPause": "Paragraph pause",
+    "voiceLicense": "Voice license and model card",
+    "licenseHelp": "This voice has its own terms. Availability does not mean unrestricted commercial use. See the model card and its dataset license.",
+    "loadingLicense": "Loading license details…",
+    "licenseUnavailable": "License details could not be loaded. Open the model card to review the terms.",
+    "openModelCard": "Open model card",
+    "showControls": "Show controls",
+    "hideControls": "Hide controls",
+    "autoHideControls": "Automatically hide controls during playback",
+    "engineLicense": "Speech engine license (GPL-3.0-or-later)"
   }
 }

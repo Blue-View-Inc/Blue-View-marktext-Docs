@@ -9,6 +9,10 @@ import { requireMenuItem } from '../lookup'
 
 type Win = BrowserWindow | null | undefined
 
+export const readAloud = (win: Win): void => {
+  if (win) win.webContents.send('mt::read-aloud')
+}
+
 // TODO(Refactor): Move to filesystem and provide generic API to search files in directories.
 ipcMain.on('mt::ask-for-image-auto-path', (e, { pathname, src, id }) => {
   const win = BrowserWindow.fromWebContents(e.sender)
@@ -40,7 +44,6 @@ ipcMain.on('mt::ask-for-image-auto-path', (e, { pathname, src, id }) => {
       return win.webContents.send(`mt::response-of-image-path-${id}`, [])
     })
 })
-
 
 /**
  * macOS native panels (Open/Save, "Go to Folder") are not `BrowserWindow`s, so
@@ -159,7 +162,6 @@ export const lineEnding = (win: Win, lineEnding: string): void => {
   }
 }
 
-
 export const loadEditCommands = (commandManager: CommandManager): void => {
   commandManager.add(COMMANDS.EDIT_COPY, nativeCopy)
   commandManager.add(COMMANDS.EDIT_COPY_AS_HTML, editorCopyAsHtml)
@@ -180,7 +182,6 @@ export const loadEditCommands = (commandManager: CommandManager): void => {
   commandManager.add(COMMANDS.EDIT_SELECT_ALL, editorSelectAll)
   commandManager.add(COMMANDS.EDIT_UNDO, editorUndo)
 }
-
 
 // NOTE: Don't use static `getMenuItemById` here, instead request the menu by
 //       window id from `AppMenu` manager.

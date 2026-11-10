@@ -108,15 +108,15 @@
       "checkUpdates": "检查更新"
     },
     "marktext": {
-      "title": "MarkText",
-      "about": "关于 MarkText",
+      "title": "Blue View",
+      "about": "关于 Blue View",
       "checkUpdates": "检查更新…",
       "preferences": "偏好设置",
       "services": "服务",
-      "hide": "隐藏 MarkText",
+      "hide": "隐藏 Blue View",
       "hideOthers": "隐藏其他",
       "showAll": "显示全部",
-      "quit": "退出 MarkText"
+      "quit": "退出 Blue View"
     },
     "view": {
       "view": "视图",
@@ -184,7 +184,9 @@
       "tokyoNight": "Tokyo Night",
       "tokyoNightLight": "Tokyo Night 浅色",
       "tokyoNightStorm": "Tokyo Night Storm",
-      "ulyssesLight": "Ulysses 浅色"
+      "ulyssesLight": "Ulysses 浅色",
+      "blueviewLight": "Blue View Light",
+      "blueviewDark": "Blue View Dark"
     }
   },
   "contextMenu": {
@@ -293,7 +295,7 @@
       "conflict": "目标位置已存在同名项目，请先重命名后重试。",
       "missing": "源或目标已不存在，请刷新文件夹后重试。",
       "permission": "无法移动，请检查目录权限或是否有其他应用正在占用。",
-      "openElsewhere": "移动前，请先在其他 MarkText 窗口关闭此文件或此文件夹中的文档。",
+      "openElsewhere": "移动前，请先在其他 Blue View 窗口关闭此文件或此文件夹中的文档。",
       "destinationOpen": "目标路径已有打开的文档，请先关闭后重试。"
     }
   },
@@ -310,7 +312,9 @@
       "lastModified": "修改时间",
       "unavailable": "—",
       "open": "打开文档统计"
-    }
+    },
+    "useDarkMode": "Use dark mode",
+    "useLightMode": "Use light mode"
   },
   "commandPalette": {
     "placeholder": "输入要执行的命令",
@@ -410,7 +414,7 @@
   },
   "import": {
     "title": "导入或打开",
-    "description": "拖放到这里将您的内容导入 MarkText"
+    "description": "拖放到这里将您的内容导入 Blue View"
   },
   "preferences": {
     "title": "偏好设置",
@@ -633,7 +637,7 @@
         "scriptPath": "脚本路径",
         "invalidScript": "请输入存在且可执行的脚本路径。"
       },
-      "defaultBehavior": "粘贴或拖拽图片到 MarkText 后的默认行为"
+      "defaultBehavior": "粘贴或拖拽图片到 Blue View 后的默认行为"
     },
     "markdown": {
       "title": "Markdown",
@@ -664,10 +668,10 @@
           "simple": "简单"
         },
         "mermaidLightTheme": {
-          "title": "MarkText 使用浅色主题时的 Mermaid 主题"
+          "title": "Blue View 使用浅色主题时的 Mermaid 主题"
         },
         "mermaidDarkTheme": {
-          "title": "MarkText 使用深色主题时的 Mermaid 主题"
+          "title": "Blue View 使用深色主题时的 Mermaid 主题"
         },
         "plantumlServer": {
           "title": "PlantUML 服务器 URL"
@@ -778,11 +782,12 @@
   },
   "about": {
     "copyright": "Copyright © Luo Ran 2017-{year}",
-    "copyrightContributors": "版权贡献者"
+    "copyrightContributors": "版权贡献者",
+    "upstreamAttribution": "Blue View edition · Based on MarkText"
   },
   "commands": {
     "mt": {
-      "hide": "隐藏 MarkText",
+      "hide": "隐藏 Blue View",
       "hideOthers": "隐藏其他"
     },
     "file": {
@@ -939,7 +944,7 @@
     "fileExists": "文件已存在：{filename}",
     "files": "文件",
     "importWarning": "导入警告",
-    "installPandoc": "未找到 Pandoc。请先安装，或将环境变量 MARKTEXT_PANDOC 设为 pandoc 可执行文件的路径后重启 MarkText。",
+    "installPandoc": "未找到 Pandoc。请先安装，或将环境变量 MARKTEXT_PANDOC 设为 pandoc 可执行文件的路径后重启 Blue View。",
     "exportWarning": "导出提示",
     "exportWarningMore": "…另有 {count} 条",
     "keepOpen": "保持打开",
@@ -956,7 +961,7 @@
     "configSchemaViolation": "配置架构违规",
     "copyError": "复制错误",
     "initializationFailed": "初始化失败 {hint}",
-    "otherInstanceDetected": "检测到 MarkText 的另一个实例正在运行",
+    "otherInstanceDetected": "检测到 Blue View 的另一个实例正在运行",
     "report": "报告",
     "startupError": "启动错误",
     "terminatedDueToError": "由于错误而终止",
@@ -1060,5 +1065,56 @@
     "viewImage": "查看图片",
     "copyLink": "复制链接地址",
     "resumed": "已切换到编辑模式，自动保存已恢复。"
+  },
+  "readAloud": {
+    "title": "Read Aloud",
+    "playback": "Reading controls",
+    "previousParagraph": "Previous paragraph",
+    "nextParagraph": "Next paragraph",
+    "previousSentence": "Previous sentence",
+    "nextSentence": "Next sentence",
+    "play": "Play",
+    "pause": "Pause",
+    "stop": "Stop reading",
+    "speed": "Speed",
+    "normalSpeed": "1×",
+    "skipCitations": "Skip citations and bibliography",
+    "progress": "Sentence {sentence}/{sentences} · Paragraph {paragraph}/{paragraphs}",
+    "loading": "Preparing voice…",
+    "paused": "Paused",
+    "stopped": "Stopped",
+    "finished": "Finished",
+    "error": "Unable to read",
+    "empty": "There is no readable text in this document.",
+    "unavailable": "Download the selected voice in Voice and calibration to enable Read Aloud.",
+    "failed": "Read Aloud could not play this sentence. Press Play to try again.",
+    "tuneVoice": "Voice and calibration",
+    "readDocument": "Read document",
+    "language": "Language",
+    "voice": "Voice",
+    "speaker": "Speaker",
+    "installed": "Ready",
+    "downloadVoice": "Download voice ({size} MB)",
+    "downloading": "Downloading voice…",
+    "preview": "Preview voice",
+    "showAllVoices": "Show all voice models",
+    "voiceHelp": "Recommended voices use the catalog’s quality ratings. Preview reads this document’s first sentence. Choose a voice that matches the document language; it does not translate. Some languages may download additional pronunciation data on first use.",
+    "downloadFailed": "The voice could not be downloaded. Check your connection and try again.",
+    "style": "Delivery",
+    "relaxed": "Warm and relaxed",
+    "neutral": "Clear and neutral",
+    "expressive": "Brisk and expressive",
+    "expression": "Expression",
+    "sentencePause": "Sentence pause",
+    "paragraphPause": "Paragraph pause",
+    "voiceLicense": "Voice license and model card",
+    "licenseHelp": "This voice has its own terms. Availability does not mean unrestricted commercial use. See the model card and its dataset license.",
+    "loadingLicense": "Loading license details…",
+    "licenseUnavailable": "License details could not be loaded. Open the model card to review the terms.",
+    "openModelCard": "Open model card",
+    "showControls": "Show controls",
+    "hideControls": "Hide controls",
+    "autoHideControls": "Automatically hide controls during playback",
+    "engineLicense": "Speech engine license (GPL-3.0-or-later)"
   }
 }

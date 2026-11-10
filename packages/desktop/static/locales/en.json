@@ -108,15 +108,15 @@
       "checkUpdates": "Check for Updates"
     },
     "marktext": {
-      "title": "MarkText",
-      "about": "About MarkText",
+      "title": "Blue View",
+      "about": "About Blue View",
       "checkUpdates": "Check for Updates...",
       "preferences": "Preferences",
       "services": "Services",
-      "hide": "Hide MarkText",
+      "hide": "Hide Blue View",
       "hideOthers": "Hide Others",
       "showAll": "Show All",
-      "quit": "Quit MarkText"
+      "quit": "Quit Blue View"
     },
     "view": {
       "view": "View",
@@ -184,7 +184,9 @@
       "tokyoNight": "Tokyo Night",
       "tokyoNightLight": "Tokyo Night Light",
       "tokyoNightStorm": "Tokyo Night Storm",
-      "ulyssesLight": "Ulysses Light"
+      "ulyssesLight": "Ulysses Light",
+      "blueviewLight": "Blue View Light",
+      "blueviewDark": "Blue View Dark"
     }
   },
   "contextMenu": {
@@ -293,7 +295,7 @@
       "conflict": "The destination already contains an item with this name. Rename it before trying again.",
       "missing": "The source or destination no longer exists. Refresh the folder and try again.",
       "permission": "The item could not be moved. Check folder permissions and whether another application is using it.",
-      "openElsewhere": "Close this file and any documents inside this folder in other MarkText windows before moving it.",
+      "openElsewhere": "Close this file and any documents inside this folder in other Blue View windows before moving it.",
       "destinationOpen": "A document is already open at the destination path. Close it before trying again."
     }
   },
@@ -310,7 +312,9 @@
       "lastModified": "Modified",
       "unavailable": "—",
       "open": "Open document statistics"
-    }
+    },
+    "useDarkMode": "Use dark mode",
+    "useLightMode": "Use light mode"
   },
   "commandPalette": {
     "placeholder": "Type a command to execute",
@@ -410,7 +414,7 @@
   },
   "import": {
     "title": "Import or Open",
-    "description": "Drop here to get your stuff into MarkText"
+    "description": "Drop here to get your stuff into Blue View"
   },
   "preferences": {
     "title": "Preferences",
@@ -633,7 +637,7 @@
         "scriptPath": "Script path",
         "invalidScript": "Enter the path to an existing executable script."
       },
-      "defaultBehavior": "The default behavior after pasting or dragging the image to MarkText"
+      "defaultBehavior": "The default behavior after pasting or dragging the image to Blue View"
     },
     "markdown": {
       "title": "Markdown",
@@ -664,10 +668,10 @@
           "simple": "Simple"
         },
         "mermaidLightTheme": {
-          "title": "Mermaid theme for light MarkText themes"
+          "title": "Mermaid theme for light Blue View themes"
         },
         "mermaidDarkTheme": {
-          "title": "Mermaid theme for dark MarkText themes"
+          "title": "Mermaid theme for dark Blue View themes"
         },
         "plantumlServer": {
           "title": "PlantUML Server URL"
@@ -778,11 +782,12 @@
   },
   "about": {
     "copyright": "Copyright © Luo Ran 2017-{year}",
-    "copyrightContributors": "Made with <3 by Github Contributors"
+    "copyrightContributors": "Made with <3 by Github Contributors",
+    "upstreamAttribution": "Blue View edition · Based on MarkText"
   },
   "commands": {
     "mt": {
-      "hide": "Hide MarkText",
+      "hide": "Hide Blue View",
       "hideOthers": "Hide Others"
     },
     "file": {
@@ -925,6 +930,57 @@
       "switchLanguage": "Switch Language"
     }
   },
+  "readAloud": {
+    "title": "Read Aloud",
+    "playback": "Reading controls",
+    "previousParagraph": "Previous paragraph",
+    "nextParagraph": "Next paragraph",
+    "previousSentence": "Previous sentence",
+    "nextSentence": "Next sentence",
+    "play": "Play",
+    "pause": "Pause",
+    "stop": "Stop reading",
+    "speed": "Speed",
+    "normalSpeed": "1×",
+    "skipCitations": "Skip citations and bibliography",
+    "progress": "Sentence {sentence}/{sentences} · Paragraph {paragraph}/{paragraphs}",
+    "loading": "Preparing voice…",
+    "paused": "Paused",
+    "stopped": "Stopped",
+    "finished": "Finished",
+    "error": "Unable to read",
+    "empty": "There is no readable text in this document.",
+    "unavailable": "Download the selected voice in Voice and calibration to enable Read Aloud.",
+    "failed": "Read Aloud could not play this sentence. Press Play to try again.",
+    "tuneVoice": "Voice and calibration",
+    "readDocument": "Read document",
+    "language": "Language",
+    "voice": "Voice",
+    "speaker": "Speaker",
+    "installed": "Ready",
+    "downloadVoice": "Download voice ({size} MB)",
+    "downloading": "Downloading voice…",
+    "preview": "Preview voice",
+    "showAllVoices": "Show all voice models",
+    "voiceHelp": "Recommended voices use the catalog’s quality ratings. Preview reads this document’s first sentence. Choose a voice that matches the document language; it does not translate. Some languages may download additional pronunciation data on first use.",
+    "downloadFailed": "The voice could not be downloaded. Check your connection and try again.",
+    "style": "Delivery",
+    "relaxed": "Warm and relaxed",
+    "neutral": "Clear and neutral",
+    "expressive": "Brisk and expressive",
+    "expression": "Expression",
+    "sentencePause": "Sentence pause",
+    "paragraphPause": "Paragraph pause",
+    "voiceLicense": "Voice license and model card",
+    "licenseHelp": "This voice has its own terms. Availability does not mean unrestricted commercial use. See the model card and its dataset license.",
+    "loadingLicense": "Loading license details…",
+    "licenseUnavailable": "License details could not be loaded. Open the model card to review the terms.",
+    "openModelCard": "Open model card",
+    "showControls": "Show controls",
+    "hideControls": "Hide controls",
+    "autoHideControls": "Automatically hide controls during playback",
+    "engineLicense": "Speech engine license (GPL-3.0-or-later)"
+  },
   "common": {
     "cancel": "Cancel",
     "ok": "OK"
@@ -939,7 +995,7 @@
     "fileExists": "File exists {filename}",
     "files": "Files",
     "importWarning": "Import warning",
-    "installPandoc": "Pandoc was not found. Install it, or set the MARKTEXT_PANDOC environment variable to the pandoc binary and restart MarkText.",
+    "installPandoc": "Pandoc was not found. Install it, or set the MARKTEXT_PANDOC environment variable to the pandoc binary and restart Blue View.",
     "exportWarning": "Export warning",
     "exportWarningMore": "…and {count} more",
     "keepOpen": "Keep open",
@@ -956,7 +1012,7 @@
     "configSchemaViolation": "Configuration schema violation",
     "copyError": "Copy error",
     "initializationFailed": "Initialization failed {hint}",
-    "otherInstanceDetected": "Another instance of MarkText is already running",
+    "otherInstanceDetected": "Another instance of Blue View is already running",
     "report": "Report",
     "startupError": "Startup error",
     "terminatedDueToError": "Terminated due to error",

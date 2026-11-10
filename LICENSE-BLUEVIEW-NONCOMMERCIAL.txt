@@ -1,0 +1,114 @@
+BlueView Non-Commercial License
+Version 1.0, 2026
+
+Copyright (c) 2026 BlueView / Frank Perez. All rights reserved.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SCOPE AND THIRD-PARTY EXCLUSIONS
+
+This license applies only to original Blue View contributions and branding
+that Blue View has the right to license. It does not replace or restrict
+licenses for upstream MarkText, Muya, other third-party code, Piper, voice
+models, or other independently licensed components. The speech adapter
+packages/desktop/static/speech-worker.py is provided under GPL-3.0-or-later.
+Existing MIT and GPL rights, including commercial rights where those licenses
+grant them, remain intact. See LICENSES/MarkText-MIT.txt and THIRD_PARTY_NOTICES.md.
+
+DEFINITIONS
+
+"Software" means the Blue View original additions to Blue-View-marktext-Docs source code, binaries,
+documentation, and all associated files distributed under this license.
+
+"BlueView" means BlueView and its authorized representatives.
+
+"Non-Commercial Use" means any use that is not primarily intended for, or
+directed toward, commercial advantage or monetary compensation. This includes,
+but is not limited to:
+
+  • Personal, hobbyist, or home use
+  • Academic research and education
+  • Non-profit organization use
+  • Open-source project contributions (non-revenue-generating)
+  • Evaluation and testing for potential non-commercial deployment
+
+"Commercial Use" means any use that is primarily intended for or directed
+toward commercial advantage or monetary compensation, including but not
+limited to:
+
+  • Incorporating the Software into a product or service that is sold,
+    licensed, or otherwise monetized
+  • Using the Software to provide services to paying customers or clients
+  • Deploying the Software within a for-profit organization as part of
+    revenue-generating operations
+  • Distributing the Software (modified or unmodified) as part of a
+    commercial offering
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+GRANT OF LICENSE — NON-COMMERCIAL
+
+Subject to the terms and conditions of this license, BlueView hereby grants
+you a worldwide, royalty-free, non-exclusive license to:
+
+  1. Use, copy, and run the Software for Non-Commercial Use only.
+  2. Modify the Software and create derivative works solely for
+     Non-Commercial Use.
+  3. Distribute copies of the Software (modified or unmodified) under the
+     same terms as this license, provided that you:
+       (a) retain this license and all copyright notices in every copy, and
+       (b) clearly indicate any modifications you made.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+COMMERCIAL USE — PAID LICENSE REQUIRED
+
+Commercial Use of this Software is not permitted under this license.
+
+If you wish to use this Software for Commercial Use, you must obtain a
+separate commercial license from BlueView.
+
+To inquire about commercial licensing, contact:
+
+  Frank Perez — BlueView
+  Email:   frank@blueview.ai
+  Subject: Commercial License Inquiry — Blue-View-marktext-Docs
+
+Commercial licenses may be granted on a per-seat, per-deployment, per-product,
+or revenue-share basis at BlueView's sole discretion.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+CONDITIONS
+
+In all permitted uses you must:
+
+  1. Retain this license file and all copyright notices.
+  2. Not remove or obscure any trademark, branding, or attribution notices.
+  3. Not use the name "BlueView", "Frank Perez", or any BlueView trademark
+     to endorse or promote products derived from this Software without prior
+     written permission.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DISCLAIMER OF WARRANTIES
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. IN NO EVENT SHALL
+BLUEVIEW OR FRANK PEREZ BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF,
+OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TERMINATION
+
+This license terminates automatically if you violate any of its terms.
+Upon termination you must immediately cease all use and destroy all copies
+of the Software in your possession.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+For questions about permitted uses, contact:  frank@blueview.ai

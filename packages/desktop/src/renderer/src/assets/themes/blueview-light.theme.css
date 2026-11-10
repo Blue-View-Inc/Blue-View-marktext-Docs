@@ -1,0 +1,8 @@
+@import './blueview-base.css';
+
+:root {
+  color-scheme: light;
+  --bv-editor-paper: rgba(255, 255, 255, 0.84);
+  --bv-window-background: #fbfdff;
+  --bv-primary-on: #ffffff;
+}

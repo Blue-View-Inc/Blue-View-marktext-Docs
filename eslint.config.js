@@ -19,6 +19,7 @@ export default [
       '**/dist/**',
       // Keep Next.js rules out of desktop CI; the website validates its own React code.
       'packages/website/**',
+      'packages/desktop/static/speech/**',
       // muya v2 (TS) self-lints with its own antfu-based config
       // (packages/muya/eslint.config.mjs). Different style rules from the
       // marktext-desktop config (4-space indent, semis required, strict

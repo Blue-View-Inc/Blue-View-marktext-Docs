@@ -11,7 +11,7 @@ export const DEFAULT_STYLE = Object.freeze({
   codeFontFamily: DEFAULT_CODE_FONT_FAMILY,
   codeFontSize: '14px',
   hideScrollbar: false,
-  theme: 'light'
+  theme: 'blueview-light'
 })
 
 export { railscastsThemes, oneDarkThemes } from '../../common/theme'

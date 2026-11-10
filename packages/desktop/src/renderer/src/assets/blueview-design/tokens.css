@@ -1,0 +1,299 @@
+/*
+ * Blue View glass tokens.
+ *
+ * Light frosted glass over a pale, luminous backdrop is the default; dark is
+ * the faint, optional variant. Dark applies when the system asks for it
+ * (unless the page sets data-theme="light" or .light), or when the page sets
+ * data-theme="dark" or the .dark class. A .light or .dark class on any
+ * element scopes that theme to its subtree.
+ *
+ * The same values live in tokens.json. scripts/check-tokens.mjs fails if the
+ * two ever differ, so change both together.
+ */
+
+/* ---------------------------------------------------------------- shared */
+:root {
+  --bv-brand-gold: #f3c04a;
+  --bv-brand-blue: #64b2fc;
+
+  --bv-font-head: 'Manrope Variable', 'Manrope', ui-sans-serif, system-ui, 'Segoe UI', sans-serif;
+  --bv-font-body: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, 'Segoe UI', sans-serif;
+
+  --bv-radius-band: 28px;
+  --bv-radius-panel: 26px;
+  --bv-radius-card: 20px;
+  --bv-radius-chip: 999px;
+
+  --bv-glass-blur: blur(26px) saturate(1.8);
+
+  /* Type scale. -compact is the size below 640px wide. */
+  --bv-text-display-font: var(--bv-font-head);
+  --bv-text-display-size: 34px;
+  --bv-text-display-size-compact: 26px;
+  --bv-text-display-weight: 800;
+  --bv-text-display-line-height: 1.25;
+  --bv-text-display-letter-spacing: -0.02em;
+  --bv-text-headline-font: var(--bv-font-head);
+  --bv-text-headline-size: 32px;
+  --bv-text-headline-size-compact: 24px;
+  --bv-text-headline-weight: 800;
+  --bv-text-headline-line-height: 1.25;
+  --bv-text-headline-letter-spacing: -0.015em;
+  --bv-text-metric-font: var(--bv-font-head);
+  --bv-text-metric-size: 22px;
+  --bv-text-metric-weight: 800;
+  --bv-text-metric-line-height: 1;
+  --bv-text-title-font: var(--bv-font-head);
+  --bv-text-title-size: 16px;
+  --bv-text-title-weight: 750;
+  --bv-text-title-letter-spacing: -0.005em;
+  --bv-text-heading-font: var(--bv-font-head);
+  --bv-text-heading-size: 16px;
+  --bv-text-heading-weight: 700;
+  --bv-text-heading-line-height: 1.375;
+  --bv-text-lead-font: var(--bv-font-body);
+  --bv-text-lead-size: 16px;
+  --bv-text-lead-size-compact: 15px;
+  --bv-text-body-font: var(--bv-font-body);
+  --bv-text-body-size: 14px;
+  --bv-text-small-font: var(--bv-font-body);
+  --bv-text-small-size: 13px;
+  --bv-text-chip-font: var(--bv-font-body);
+  --bv-text-chip-size: 12.5px;
+  --bv-text-chip-weight: 650;
+  --bv-text-caption-font: var(--bv-font-body);
+  --bv-text-caption-size: 12px;
+  --bv-text-eyebrow-font: var(--bv-font-body);
+  --bv-text-eyebrow-size: 12px;
+  --bv-text-eyebrow-weight: 700;
+  --bv-text-eyebrow-letter-spacing: 0.08em;
+  --bv-text-micro-font: var(--bv-font-body);
+  --bv-text-micro-size: 11px;
+}
+
+/* ---------------------------------------------------------------- light */
+:root,
+:root[data-theme='light'],
+.light {
+  color-scheme: light;
+
+  --bv-accent: #2861b8;
+  --bv-text-ink: #0f2a44;
+  --bv-text-muted: #4a6079;
+  --bv-text-subtle: #5a6f86;
+
+  --bv-glass-fill: linear-gradient(140deg, rgba(255, 255, 255, 0.36) 0%, rgba(255, 255, 255, 0.18) 100%);
+  --bv-glass-soft: rgba(255, 255, 255, 0.22);
+  --bv-glass-strong: rgba(255, 255, 255, 0.72);
+  --bv-glass-edge: rgba(255, 255, 255, 0.72);
+  --bv-glass-hairline: rgba(40, 97, 184, 0.1);
+  --bv-glass-line: rgba(40, 97, 184, 0.12);
+  --bv-glass-highlight: inset 1px 1px 0 rgba(255, 255, 255, 0.95);
+  --bv-glass-inner-glow: inset 0 0 32px rgba(255, 255, 255, 0.22);
+  --bv-glass-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.95), inset 0 0 32px rgba(255, 255, 255, 0.22),
+    0 0 0 1px rgba(40, 97, 184, 0.1), 0 0 40px -12px rgba(255, 255, 255, 0.7), 0 24px 48px -28px rgba(40, 80, 140, 0.28);
+  --bv-glass-shadow-lift: inset 0 1px 0 rgba(255, 255, 255, 1), 0 0 0 1px rgba(40, 97, 184, 0.16),
+    0 18px 36px -20px rgba(40, 80, 140, 0.35);
+
+  --bv-card-fill: rgba(255, 255, 255, 0.34);
+  --bv-card-alt: rgba(255, 255, 255, 0.22);
+  --bv-card-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 0 0 1px rgba(40, 97, 184, 0.1);
+
+  --bv-hover-fill: color-mix(in srgb, #2861b8 8%, rgba(255, 255, 255, 0.34));
+  --bv-hover-edge: color-mix(in srgb, #2861b8 35%, rgba(40, 97, 184, 0.12));
+
+  /* States only: the fill, text on the page, an icon on the fill, a soft tint. */
+  --bv-state-up: #2f9e5b;
+  --bv-state-up-ink: #1c6d3e;
+  --bv-state-up-on: #ffffff;
+  --bv-state-up-soft: rgba(47, 158, 91, 0.12);
+  --bv-state-slow: #f0a43a;
+  --bv-state-slow-ink: #855000;
+  --bv-state-slow-on: #3b2600;
+  --bv-state-slow-soft: rgba(240, 164, 58, 0.16);
+  --bv-state-down: #dc4a4a;
+  --bv-state-down-ink: #a82727;
+  --bv-state-down-on: #ffffff;
+  --bv-state-down-soft: rgba(220, 74, 74, 0.12);
+  --bv-state-unknown: #8a97a8;
+  --bv-state-unknown-ink: #4a5768;
+  --bv-state-unknown-on: #ffffff;
+  --bv-state-unknown-soft: rgba(138, 151, 168, 0.16);
+  --bv-state-none: #a9b4c2;
+  --bv-state-none-ink: #56636f;
+  --bv-state-none-on: #ffffff;
+  --bv-state-none-soft: rgba(169, 180, 194, 0.18);
+  --bv-state-empty: rgba(40, 97, 184, 0.1);
+
+  --bv-page: transparent;
+  --bv-backdrop-ground: linear-gradient(180deg, #fbfdff 0%, #eaf2fb 100%);
+  --bv-backdrop-glow-gold: radial-gradient(45% 40% at 85% 12%, rgba(243, 192, 74, 0.2) 0%, transparent 70%);
+  --bv-backdrop-glow-blue: radial-gradient(50% 45% at 10% 85%, rgba(100, 178, 252, 0.2) 0%, transparent 70%);
+
+  /* The CSS stand-in ovals shown until (or without) WebGL. */
+  --bv-oval-edge: rgba(255, 255, 255, 0.8);
+  --bv-oval-shadow: inset 0 2px 18px rgba(255, 255, 255, 0.7), 0 30px 60px -30px rgba(40, 80, 140, 0.25);
+  --bv-oval-gold: linear-gradient(160deg, rgba(255, 236, 190, 0.7) 0%, rgba(243, 192, 74, 0.22) 100%);
+  --bv-oval-blue: linear-gradient(160deg, rgba(214, 236, 255, 0.75) 0%, rgba(100, 178, 252, 0.22) 100%);
+  --bv-oval-opacity: 1;
+
+  /* The CSS-only drifting lenses (fallback/double-oval.css). */
+  --bv-lens-edge: rgba(255, 255, 255, 0.82);
+  --bv-lens-gold: linear-gradient(160deg, rgba(255, 236, 190, 0.74) 0%, rgba(243, 192, 74, 0.26) 100%);
+  --bv-lens-blue: linear-gradient(160deg, rgba(214, 236, 255, 0.78) 0%, rgba(100, 178, 252, 0.26) 100%);
+  --bv-lens-shine: rgba(255, 255, 255, 0.9);
+  --bv-lens-caustic: rgba(255, 255, 255, 0.42);
+  --bv-lens-shadow-gold: inset 0 2px 18px rgba(255, 255, 255, 0.7), inset 0 -16px 34px rgba(243, 192, 74, 0.2),
+    0 34px 60px -34px rgba(120, 90, 20, 0.28);
+  --bv-lens-shadow-blue: inset 0 2px 18px rgba(255, 255, 255, 0.7), inset 0 -16px 34px rgba(100, 178, 252, 0.22),
+    0 34px 60px -34px rgba(40, 80, 140, 0.3);
+  --bv-lens-opacity: 1;
+}
+
+/* ---------------------------------------------------------------- dark, from the system */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']):not(.light) {
+    color-scheme: dark;
+
+    --bv-accent: #8cc4ff;
+    --bv-text-ink: #eef3fb;
+    --bv-text-muted: #b6c3d4;
+    --bv-text-subtle: #a3b1c3;
+
+    --bv-glass-fill: linear-gradient(140deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.04) 100%);
+    --bv-glass-soft: rgba(255, 255, 255, 0.06);
+    --bv-glass-strong: rgba(30, 42, 62, 0.86);
+    --bv-glass-edge: rgba(255, 255, 255, 0.14);
+    --bv-glass-hairline: rgba(140, 196, 255, 0.1);
+    --bv-glass-line: rgba(255, 255, 255, 0.12);
+    --bv-glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    --bv-glass-inner-glow: none;
+    --bv-glass-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 0 0 1px rgba(140, 196, 255, 0.1),
+      0 24px 48px -28px rgba(0, 0, 0, 0.6);
+    --bv-glass-shadow-lift: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 0 0 1px rgba(140, 196, 255, 0.2),
+      0 18px 36px -20px rgba(0, 0, 0, 0.7);
+
+    --bv-card-fill: rgba(255, 255, 255, 0.08);
+    --bv-card-alt: rgba(255, 255, 255, 0.05);
+    --bv-card-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 0 0 1px rgba(140, 196, 255, 0.1);
+
+    --bv-hover-fill: color-mix(in srgb, #8cc4ff 8%, rgba(255, 255, 255, 0.08));
+    --bv-hover-edge: color-mix(in srgb, #8cc4ff 35%, rgba(255, 255, 255, 0.12));
+
+    --bv-state-up: #5cc98a;
+    --bv-state-up-ink: #8fe0b0;
+    --bv-state-up-on: #0d2016;
+    --bv-state-up-soft: rgba(92, 201, 138, 0.16);
+    --bv-state-slow: #f2b552;
+    --bv-state-slow-ink: #f7cd83;
+    --bv-state-slow-on: #2e1d00;
+    --bv-state-slow-soft: rgba(242, 181, 82, 0.16);
+    --bv-state-down: #f07b7b;
+    --bv-state-down-ink: #f8a8a8;
+    --bv-state-down-on: #2b0b0b;
+    --bv-state-down-soft: rgba(240, 123, 123, 0.16);
+    --bv-state-unknown: #9aa7b8;
+    --bv-state-unknown-ink: #c3cddb;
+    --bv-state-unknown-on: #151b22;
+    --bv-state-unknown-soft: rgba(154, 167, 184, 0.16);
+    --bv-state-none: #7d8896;
+    --bv-state-none-ink: #b0bac6;
+    --bv-state-none-on: #151b22;
+    --bv-state-none-soft: rgba(125, 136, 150, 0.16);
+    --bv-state-empty: rgba(255, 255, 255, 0.1);
+
+    --bv-page: #0f1724;
+    --bv-backdrop-ground: linear-gradient(180deg, #121b2b 0%, #0d1420 100%);
+    --bv-backdrop-glow-gold: radial-gradient(45% 40% at 85% 12%, rgba(243, 192, 74, 0.1) 0%, transparent 70%);
+    --bv-backdrop-glow-blue: radial-gradient(50% 45% at 10% 85%, rgba(100, 178, 252, 0.12) 0%, transparent 70%);
+
+    --bv-oval-edge: rgba(255, 255, 255, 0.12);
+    --bv-oval-shadow: inset 0 2px 18px rgba(255, 255, 255, 0.06);
+    --bv-oval-gold: linear-gradient(160deg, rgba(255, 236, 190, 0.7) 0%, rgba(243, 192, 74, 0.22) 100%);
+    --bv-oval-blue: linear-gradient(160deg, rgba(214, 236, 255, 0.75) 0%, rgba(100, 178, 252, 0.22) 100%);
+    --bv-oval-opacity: 0.5;
+
+    --bv-lens-edge: rgba(255, 255, 255, 0.16);
+    --bv-lens-gold: linear-gradient(160deg, rgba(243, 192, 74, 0.34) 0%, rgba(243, 192, 74, 0.06) 100%);
+    --bv-lens-blue: linear-gradient(160deg, rgba(100, 178, 252, 0.36) 0%, rgba(100, 178, 252, 0.06) 100%);
+    --bv-lens-shine: rgba(255, 255, 255, 0.2);
+    --bv-lens-caustic: rgba(255, 255, 255, 0.06);
+    --bv-lens-shadow-gold: inset 0 2px 18px rgba(255, 255, 255, 0.06);
+    --bv-lens-shadow-blue: inset 0 2px 18px rgba(255, 255, 255, 0.06);
+    --bv-lens-opacity: 0.55;
+  }
+}
+
+/* ---------------------------------------------------------------- dark, chosen by the page */
+:root[data-theme='dark'],
+:root.dark,
+.dark {
+  color-scheme: dark;
+
+  --bv-accent: #8cc4ff;
+  --bv-text-ink: #eef3fb;
+  --bv-text-muted: #b6c3d4;
+  --bv-text-subtle: #a3b1c3;
+
+  --bv-glass-fill: linear-gradient(140deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.04) 100%);
+  --bv-glass-soft: rgba(255, 255, 255, 0.06);
+  --bv-glass-strong: rgba(30, 42, 62, 0.86);
+  --bv-glass-edge: rgba(255, 255, 255, 0.14);
+  --bv-glass-hairline: rgba(140, 196, 255, 0.1);
+  --bv-glass-line: rgba(255, 255, 255, 0.12);
+  --bv-glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  --bv-glass-inner-glow: none;
+  --bv-glass-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 0 0 1px rgba(140, 196, 255, 0.1),
+    0 24px 48px -28px rgba(0, 0, 0, 0.6);
+  --bv-glass-shadow-lift: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 0 0 1px rgba(140, 196, 255, 0.2),
+    0 18px 36px -20px rgba(0, 0, 0, 0.7);
+
+  --bv-card-fill: rgba(255, 255, 255, 0.08);
+  --bv-card-alt: rgba(255, 255, 255, 0.05);
+  --bv-card-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 0 0 1px rgba(140, 196, 255, 0.1);
+
+  --bv-hover-fill: color-mix(in srgb, #8cc4ff 8%, rgba(255, 255, 255, 0.08));
+  --bv-hover-edge: color-mix(in srgb, #8cc4ff 35%, rgba(255, 255, 255, 0.12));
+
+  --bv-state-up: #5cc98a;
+  --bv-state-up-ink: #8fe0b0;
+  --bv-state-up-on: #0d2016;
+  --bv-state-up-soft: rgba(92, 201, 138, 0.16);
+  --bv-state-slow: #f2b552;
+  --bv-state-slow-ink: #f7cd83;
+  --bv-state-slow-on: #2e1d00;
+  --bv-state-slow-soft: rgba(242, 181, 82, 0.16);
+  --bv-state-down: #f07b7b;
+  --bv-state-down-ink: #f8a8a8;
+  --bv-state-down-on: #2b0b0b;
+  --bv-state-down-soft: rgba(240, 123, 123, 0.16);
+  --bv-state-unknown: #9aa7b8;
+  --bv-state-unknown-ink: #c3cddb;
+  --bv-state-unknown-on: #151b22;
+  --bv-state-unknown-soft: rgba(154, 167, 184, 0.16);
+  --bv-state-none: #7d8896;
+  --bv-state-none-ink: #b0bac6;
+  --bv-state-none-on: #151b22;
+  --bv-state-none-soft: rgba(125, 136, 150, 0.16);
+  --bv-state-empty: rgba(255, 255, 255, 0.1);
+
+  --bv-page: #0f1724;
+  --bv-backdrop-ground: linear-gradient(180deg, #121b2b 0%, #0d1420 100%);
+  --bv-backdrop-glow-gold: radial-gradient(45% 40% at 85% 12%, rgba(243, 192, 74, 0.1) 0%, transparent 70%);
+  --bv-backdrop-glow-blue: radial-gradient(50% 45% at 10% 85%, rgba(100, 178, 252, 0.12) 0%, transparent 70%);
+
+  --bv-oval-edge: rgba(255, 255, 255, 0.12);
+  --bv-oval-shadow: inset 0 2px 18px rgba(255, 255, 255, 0.06);
+  --bv-oval-gold: linear-gradient(160deg, rgba(255, 236, 190, 0.7) 0%, rgba(243, 192, 74, 0.22) 100%);
+  --bv-oval-blue: linear-gradient(160deg, rgba(214, 236, 255, 0.75) 0%, rgba(100, 178, 252, 0.22) 100%);
+  --bv-oval-opacity: 0.5;
+
+  --bv-lens-edge: rgba(255, 255, 255, 0.16);
+  --bv-lens-gold: linear-gradient(160deg, rgba(243, 192, 74, 0.34) 0%, rgba(243, 192, 74, 0.06) 100%);
+  --bv-lens-blue: linear-gradient(160deg, rgba(100, 178, 252, 0.36) 0%, rgba(100, 178, 252, 0.06) 100%);
+  --bv-lens-shine: rgba(255, 255, 255, 0.2);
+  --bv-lens-caustic: rgba(255, 255, 255, 0.06);
+  --bv-lens-shadow-gold: inset 0 2px 18px rgba(255, 255, 255, 0.06);
+  --bv-lens-shadow-blue: inset 0 2px 18px rgba(255, 255, 255, 0.06);
+  --bv-lens-opacity: 0.55;
+}

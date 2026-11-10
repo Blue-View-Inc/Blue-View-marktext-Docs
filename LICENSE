@@ -1,22 +1,15 @@
-MIT License
+Blue View Docs — license overview
 
-Copyright (c) 2017-present Luo Ran
-Copyright (c) 2018-present MarkText Contributors
+Original Blue View additions are covered by LICENSE-BLUEVIEW-NONCOMMERCIAL.txt.
+The repository is publicly available source, with non-commercial terms for
+those additions; it is not wholly licensed under an OSI-approved license.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Upstream MarkText retains its MIT license, reproduced in full at
+LICENSES/MarkText-MIT.txt. Other upstream code retains its existing notices.
+Those licenses and the rights they grant are not replaced or restricted.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+Piper and packages/desktop/static/speech-worker.py are GPL-3.0-or-later.
+See LICENSES/Piper-GPL-3.0.txt. Downloaded voice models have separate licenses.
+Blue View design assets and fonts retain their own notices.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+See THIRD_PARTY_NOTICES.md for component locations and attribution.

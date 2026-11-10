@@ -1,7 +1,8 @@
 {
   "name": "marktext",
+  "productName": "Blue View",
   "version": "0.24.0-dev",
-  "description": "MarkText",
+  "description": "Blue View Docs \u2014 Markdown editor with offline read-aloud",
   "main": "./out/main/index.js",
   "author": {
     "name": "Jocs",
@@ -15,7 +16,7 @@
       "url": "https://github.com/Jocs"
     },
     {
-      "name": "Felix Häusler",
+      "name": "Felix H\u00e4usler",
       "email": "hfelix@protonmail.ch",
       "url": "https://github.com/fxha"
     },
@@ -25,10 +26,10 @@
       "url": "https://github.com/Tkaixiang"
     }
   ],
-  "homepage": "https://github.com/marktext/marktext",
+  "homepage": "https://github.com/Blue-View-Inc/Blue-View-marktext-Docs",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/marktext/marktext.git"
+    "url": "git+https://github.com/Blue-View-Inc/Blue-View-marktext-Docs.git"
   },
   "scripts": {
     "minify-locales": "tsx ../../scripts/minify-locales.ts",
@@ -57,6 +58,8 @@
   "dependencies": {
     "@electron-toolkit/utils": "^4.0.0",
     "@element-plus/icons-vue": "^2.3.2",
+    "@fontsource-variable/inter": "5.3.0",
+    "@fontsource-variable/manrope": "5.3.0",
     "@intlify/core-base": "^11.4.16",
     "@jsr/std__path": "^1.1.6",
     "@marktext/file-icons": "^1.0.6",

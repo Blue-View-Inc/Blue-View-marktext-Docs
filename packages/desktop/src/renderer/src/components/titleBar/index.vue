@@ -18,7 +18,7 @@
         class="title"
         @dblclick.stop="toggleMaxmizeOnMacOS"
       >
-        <span v-if="!filename">MarkText</span>
+        <span v-if="!filename">{{ APP_NAME }}</span>
         <span v-else>
           <span
             class="save-dot"
@@ -59,6 +59,33 @@
           @click.stop="handleMenuClick"
         >
           <span class="text-center-vertical">&#9776;</span>
+        </button>
+        <img
+          class="blue-view-mark"
+          :src="isDarkThemeId(preferencesStore.theme) ? BlueViewDarkIcon : BlueViewIcon"
+          :alt="APP_NAME"
+          :title="APP_NAME"
+        >
+        <button
+          type="button"
+          class="plain-button appearance-toggle"
+          :aria-label="
+            t(
+              isDarkThemeId(preferencesStore.theme)
+                ? 'titleBar.useLightMode'
+                : 'titleBar.useDarkMode'
+            )
+          "
+          :title="
+            t(
+              isDarkThemeId(preferencesStore.theme)
+                ? 'titleBar.useLightMode'
+                : 'titleBar.useDarkMode'
+            )
+          "
+          @click="toggleAppearance"
+        >
+          <el-icon><Sunny v-if="isDarkThemeId(preferencesStore.theme)" /><Moon v-else /></el-icon>
         </button>
         <document-statistics
           v-if="wordCount"
@@ -143,6 +170,10 @@
 </template>
 
 <script setup lang="ts">
+import { APP_NAME } from 'common/brand'
+import BlueViewIcon from '../../../../../static/brand/truedocs/truedocs-mark.svg?url'
+import BlueViewDarkIcon from '../../../../../static/brand/truedocs/truedocs-mark-dark.svg?url'
+import { isDarkThemeId } from 'common/theme'
 import { usePreferencesStore } from '@/store/preferences.js'
 import { useLayoutStore } from '@/store/layout.js'
 import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
@@ -154,7 +185,7 @@ import { pathBreadcrumb } from './pathBreadcrumb'
 import { buildWindowTitle } from './windowTitle'
 import { useEditorStore } from '@/store/editor'
 import { useI18n } from 'vue-i18n'
-import { ArrowRight } from '@element-plus/icons-vue'
+import { ArrowRight, Moon, Sunny } from '@element-plus/icons-vue'
 import IconTooltip from '@/components/iconTooltip/index.vue'
 import DocumentStatistics from './documentStatistics.vue'
 import type { FileWordCount } from '@shared/types/files'
@@ -175,6 +206,11 @@ const props = defineProps<{
 }>()
 
 const preferencesStore = usePreferencesStore()
+const toggleAppearance = (): void => {
+  const theme = isDarkThemeId(preferencesStore.theme) ? 'blueview-light' : 'blueview-dark'
+  preferencesStore.SET_SINGLE_PREFERENCE({ type: 'followSystemTheme', value: false })
+  preferencesStore.SET_SINGLE_PREFERENCE({ type: 'theme', value: theme })
+}
 const layoutStore = useLayoutStore()
 const editorStore = useEditorStore()
 const { currentFile } = storeToRefs(editorStore)
@@ -292,6 +328,23 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
+.blue-view-mark {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  margin-inline: 5px;
+  border-radius: 5px;
+  align-self: center;
+}
+.appearance-toggle {
+  width: 28px;
+  height: 28px;
+  color: var(--editorColor60);
+  border-radius: 50%;
+}
+.appearance-toggle:hover {
+  background: var(--editorColor10);
+}
 .title-bar-editor-bg {
   height: var(--titleBarHeight);
   background: var(--editorBgColor);

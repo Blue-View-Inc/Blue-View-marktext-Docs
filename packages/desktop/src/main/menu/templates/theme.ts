@@ -8,6 +8,7 @@ import type Preference from '../../preferences'
 // passed to `selectTheme` / compared against the saved theme. (A few light
 // themes keep historical ids, e.g. cadmiumLight -> 'light'.)
 const LIGHT_THEMES: ReadonlyArray<readonly [string, string]> = [
+  ['blueviewLight', 'blueview-light'],
   ['ayuLight', 'ayu-light'],
   ['cadmiumLight', 'light'],
   ['catppuccinLatte', 'catppuccin-latte'],
@@ -21,6 +22,7 @@ const LIGHT_THEMES: ReadonlyArray<readonly [string, string]> = [
 ]
 
 const DARK_THEMES: ReadonlyArray<readonly [string, string]> = [
+  ['blueviewDark', 'blueview-dark'],
   ['ayuDark', 'ayu-dark'],
   ['ayuMirage', 'ayu-mirage'],
   ['cadmiumDark', 'dark'],

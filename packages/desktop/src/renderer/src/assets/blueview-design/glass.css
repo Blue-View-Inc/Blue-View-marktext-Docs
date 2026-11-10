@@ -1,0 +1,111 @@
+/*
+ * Ready-made Blue View glass, built only from tokens.css (load that first).
+ *
+ *   <section class="bv-glass-panel">...</section>
+ *   <article class="bv-glass-card" tabindex="0">...</article>
+ *   <span class="bv-chip is-up"><span class="bv-chip-dot">(icon)</span>Online</span>
+ *
+ * A chip takes one state: is-up, is-slow, is-down, is-unknown or is-none.
+ * Always put an icon or a word in it; colour alone never carries the state.
+ */
+
+.bv-glass-panel {
+  position: relative;
+  min-width: 0;
+  border-radius: var(--bv-radius-panel);
+  color: var(--bv-text-ink);
+  background: var(--bv-glass-fill);
+  -webkit-backdrop-filter: var(--bv-glass-blur);
+  backdrop-filter: var(--bv-glass-blur);
+  border: 1px solid var(--bv-glass-edge);
+  box-shadow: var(--bv-glass-shadow);
+}
+
+.bv-glass-card {
+  border-radius: var(--bv-radius-card);
+  border: 1px solid var(--bv-glass-edge);
+  background: var(--bv-card-alt);
+  box-shadow: var(--bv-card-shadow);
+  padding: 16px;
+  transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+}
+.bv-glass-card:hover {
+  box-shadow: var(--bv-glass-shadow-lift);
+}
+.bv-glass-card:focus {
+  outline: none;
+}
+.bv-glass-card:focus-visible {
+  outline: 3px solid var(--bv-accent);
+  outline-offset: 2px;
+}
+
+/* No backdrop blur: an opaque-enough fill keeps the text readable. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .bv-glass-panel {
+    background: var(--bv-glass-strong);
+  }
+}
+
+.bv-chip {
+  --bv-chip: var(--bv-state-none);
+  --bv-chip-ink: var(--bv-state-none-ink);
+  --bv-chip-on: var(--bv-state-none-on);
+  --bv-chip-soft: var(--bv-state-none-soft);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: var(--bv-radius-chip);
+  background: var(--bv-chip-soft);
+  padding: 3px 10px 3px 4px;
+  font-family: var(--bv-text-chip-font);
+  font-size: var(--bv-text-chip-size);
+  font-weight: var(--bv-text-chip-weight);
+  color: var(--bv-chip-ink);
+  white-space: nowrap;
+}
+.bv-chip.is-none {
+  --bv-chip: var(--bv-state-none);
+  --bv-chip-ink: var(--bv-state-none-ink);
+  --bv-chip-on: var(--bv-state-none-on);
+  --bv-chip-soft: var(--bv-state-none-soft);
+}
+.bv-chip.is-up {
+  --bv-chip: var(--bv-state-up);
+  --bv-chip-ink: var(--bv-state-up-ink);
+  --bv-chip-on: var(--bv-state-up-on);
+  --bv-chip-soft: var(--bv-state-up-soft);
+}
+.bv-chip.is-slow {
+  --bv-chip: var(--bv-state-slow);
+  --bv-chip-ink: var(--bv-state-slow-ink);
+  --bv-chip-on: var(--bv-state-slow-on);
+  --bv-chip-soft: var(--bv-state-slow-soft);
+}
+.bv-chip.is-down {
+  --bv-chip: var(--bv-state-down);
+  --bv-chip-ink: var(--bv-state-down-ink);
+  --bv-chip-on: var(--bv-state-down-on);
+  --bv-chip-soft: var(--bv-state-down-soft);
+}
+.bv-chip.is-unknown {
+  --bv-chip: var(--bv-state-unknown);
+  --bv-chip-ink: var(--bv-state-unknown-ink);
+  --bv-chip-on: var(--bv-state-unknown-on);
+  --bv-chip-soft: var(--bv-state-unknown-soft);
+}
+.bv-chip-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--bv-chip) 72%, #fff) 0%, var(--bv-chip) 72%);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.55), 0 2px 8px -2px color-mix(in srgb, var(--bv-chip) 70%, transparent);
+  color: var(--bv-chip-on);
+  flex: none;
+}
+.bv-chip-label {
+  color: var(--bv-text-muted);
+  font-weight: 500;
+}

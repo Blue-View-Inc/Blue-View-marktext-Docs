@@ -217,10 +217,10 @@ export const usePreferencesStore = defineStore('preferences', {
     mermaidDarkTheme: 'dark',
     plantumlServer: 'https://www.plantuml.com/plantuml',
 
-    theme: 'light',
+    theme: 'blueview-light',
     followSystemTheme: true,
-    lightModeTheme: 'light',
-    darkModeTheme: 'dark',
+    lightModeTheme: 'blueview-light',
+    darkModeTheme: 'blueview-dark',
     customCss: '',
 
     spellcheckerEnabled: false,

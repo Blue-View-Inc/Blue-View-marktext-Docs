@@ -19,6 +19,7 @@ concurrency:
 
 jobs:
   deploy:
+    if: github.repository == 'marktext/marktext'
     runs-on: ubuntu-latest
     permissions:
       contents: read

@@ -41,7 +41,7 @@ export const preferenceDefaults = (dark = false): UserPreferences & Record<strin
   for (const [key, rule] of Object.entries(rules))
     if ('default' in rule) defaults[key] = structuredClone(rule.default)
   Object.assign(defaults, structuredClone(bundled), RECOVERY_DEFAULTS, { language: '' })
-  if (dark) defaults.theme = 'dark'
+  if (dark) defaults.theme = 'blueview-dark'
   return defaults as UserPreferences & Record<string, unknown>
 }
 

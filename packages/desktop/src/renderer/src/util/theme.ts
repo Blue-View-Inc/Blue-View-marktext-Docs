@@ -40,6 +40,8 @@ import {
   rosePineDawn
 } from './themeColor'
 import { isLinux } from './index'
+import blueviewLight from '../assets/themes/blueview-light.theme.css?inline'
+import blueviewDark from '../assets/themes/blueview-dark.theme.css?inline'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const ORIGINAL_THEME = '#409EFF'
@@ -58,6 +60,10 @@ export const addThemeStyle = (theme: string): void => {
   const isCmRailscasts = railscastsThemes.includes(theme)
   const isCmOneDark = oneDarkThemes.includes(theme)
   const isDarkTheme = isCmOneDark || isCmRailscasts
+  document.documentElement.dataset.theme = isDarkTheme ? 'dark' : 'light'
+  document.documentElement.dataset.blueviewTheme = String(
+    theme === 'blueview-light' || theme === 'blueview-dark'
+  )
   let themeStyleEle = document.querySelector(`#${THEME_STYLE_ID}`) as HTMLStyleElement | null
   if (!themeStyleEle) {
     themeStyleEle = document.createElement('style')
@@ -66,6 +72,12 @@ export const addThemeStyle = (theme: string): void => {
   }
 
   switch (theme) {
+    case 'blueview-light':
+      themeStyleEle.innerHTML = patchTheme(blueviewLight)
+      break
+    case 'blueview-dark':
+      themeStyleEle.innerHTML = patchTheme(dark() + '\n' + blueviewDark)
+      break
     case 'light':
       themeStyleEle.innerHTML = patchTheme(
         ':root {\n  --link-color: var(--linkColor);\n  --blockquote-border-color: var(--blockquoteBorderColor);\n}'
@@ -219,7 +231,9 @@ export interface CommonStyleOptions {
 
 export const addCommonStyle = (options: CommonStyleOptions): void => {
   const { codeFontFamily, codeFontSize, hideScrollbar } = options
-  const resolvedCodeFont = codeFontFamily ? `${codeFontFamily}, ${DEFAULT_CODE_FONT_FAMILY}` : DEFAULT_CODE_FONT_FAMILY
+  const resolvedCodeFont = codeFontFamily
+    ? `${codeFontFamily}, ${DEFAULT_CODE_FONT_FAMILY}`
+    : DEFAULT_CODE_FONT_FAMILY
   let sheet = document.querySelector(`#${COMMON_STYLE_ID}`) as HTMLStyleElement | null
   if (!sheet) {
     sheet = document.createElement('style')

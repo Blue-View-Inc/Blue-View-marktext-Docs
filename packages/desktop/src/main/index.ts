@@ -14,6 +14,10 @@ import App from './app'
 import { t } from './i18n'
 import { registerSandboxIpcHandlers } from './ipc'
 import { setPlantumlServerSource } from './ipc/diagram'
+import { APP_ID, APP_NAME } from 'common/brand'
+
+app.setName(APP_NAME)
+if (process.platform === 'linux') app.commandLine.appendSwitch('class', 'blueview')
 
 process.env.MARKTEXT_VERSION = MARKTEXT_VERSION
 process.env.MARKTEXT_VERSION_STRING = MARKTEXT_VERSION_STRING
@@ -49,7 +53,7 @@ initializeLogger(appEnvironment)
 
 crashReporter.start({
   companyName: '',
-  productName: 'MarkText',
+  productName: APP_NAME,
   uploadToServer: false, // collect locally
   compress: true
 })
@@ -91,9 +95,18 @@ registerSandboxIpcHandlers({
   }
 })
 
-electronApp.setAppUserModelId('com.electron.marktext')
+electronApp.setAppUserModelId(APP_ID)
 
 app.on('browser-window-created', (_, window) => {
+  if (process.platform !== 'darwin') {
+    window.setIcon(
+      path.join(
+        app.isPackaged ? process.resourcesPath : app.getAppPath(),
+        'static',
+        'blue-view-icon.png'
+      )
+    )
+  }
   optimizer.watchWindowShortcuts(window)
 })
 

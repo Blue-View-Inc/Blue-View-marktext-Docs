@@ -1,0 +1,134 @@
+@import '../blueview-design/tokens.css';
+@import '../blueview-design/glass.css';
+@import '../blueview-design/double-oval.css';
+
+.blue-view-backdrop {
+  display: none;
+}
+
+@media not print {
+  :root[data-blueview-theme='true'] body {
+    background: var(--bv-window-background);
+    color: var(--bv-text-ink);
+    font-family: var(--bv-font-body);
+  }
+
+  :root[data-blueview-theme='true'] .blue-view-backdrop {
+    display: block;
+    z-index: 0;
+  }
+
+  :root[data-blueview-theme='true'] .editor-container,
+  :root[data-blueview-theme='true'] .pref-container {
+    position: relative;
+    z-index: 1;
+    background: transparent;
+  }
+
+  :root[data-blueview-theme='true'] .editor-middle,
+  :root[data-blueview-theme='true'] .editor-with-tabs,
+  :root[data-blueview-theme='true'] .editor-wrapper,
+  :root[data-blueview-theme='true'] .editor-placeholder,
+  :root[data-blueview-theme='true'] .recent-files-projects {
+    background: transparent;
+  }
+
+  :root[data-blueview-theme='true'] .editor-with-tabs > .container {
+    padding: 8px 12px 12px;
+    box-sizing: border-box;
+    gap: 10px;
+  }
+
+  :root[data-blueview-theme='true'] .document-body {
+    background: var(--bv-editor-paper);
+    border: 1px solid var(--bv-glass-edge);
+    border-radius: var(--bv-radius-panel);
+    box-shadow: var(--bv-glass-shadow);
+    backdrop-filter: var(--bv-glass-blur);
+    box-sizing: border-box;
+  }
+
+  :root[data-blueview-theme='true'] .side-bar,
+  :root[data-blueview-theme='true'] .document-outline,
+  :root[data-blueview-theme='true'] .title-bar,
+  :root[data-blueview-theme='true'] .title-bar-editor-bg,
+  :root[data-blueview-theme='true'] .editor-tabs {
+    background: var(--bv-glass-soft);
+    backdrop-filter: var(--bv-glass-blur);
+    border-color: var(--bv-glass-line);
+  }
+
+  :root[data-blueview-theme='true'] .document-outline {
+    border-radius: var(--bv-radius-card);
+  }
+
+  :root[data-blueview-theme='true'] .read-aloud {
+    font-family: var(--bv-font-body);
+    font-size: var(--bv-text-small-size);
+    border: 1px solid var(--bv-glass-edge);
+    border-radius: var(--bv-radius-card);
+    background: var(--bv-glass-fill);
+    box-shadow: var(--bv-card-shadow);
+    backdrop-filter: var(--bv-glass-blur);
+    margin: 8px 12px 0;
+  }
+
+  :root[data-blueview-theme='true'] .read-aloud.compact {
+    align-self: flex-end;
+    border-radius: var(--bv-radius-chip);
+    margin-top: 4px;
+  }
+
+  :root[data-blueview-theme='true'] .reading-controls strong,
+  :root[data-blueview-theme='true'] .sidebar-title,
+  :root[data-blueview-theme='true'] .about-dialog .title {
+    font-family: var(--bv-font-head);
+    font-weight: var(--bv-text-heading-weight);
+  }
+
+  :root[data-blueview-theme='true'] .voice-settings select,
+  :root[data-blueview-theme='true'] .voice-settings button {
+    font: inherit;
+    border-radius: 10px;
+    border-color: var(--bv-glass-line);
+    color: var(--bv-text-ink);
+    background: var(--bv-card-fill);
+  }
+
+  :root[data-blueview-theme='true'] .el-dialog,
+  :root[data-blueview-theme='true'] .el-popper,
+  :root[data-blueview-theme='true'] .el-notification {
+    background: var(--bv-glass-strong);
+    border: 1px solid var(--bv-glass-edge);
+    border-radius: var(--bv-radius-panel);
+    color: var(--bv-text-ink);
+    box-shadow: var(--bv-glass-shadow);
+    backdrop-filter: var(--bv-glass-blur);
+  }
+
+  :root[data-blueview-theme='true'] {
+    --el-color-primary: var(--bv-accent);
+    --el-text-color-primary: var(--bv-text-ink);
+    --el-text-color-regular: var(--bv-text-ink);
+    --el-text-color-secondary: var(--bv-text-muted);
+    --el-bg-color: var(--bv-glass-strong);
+    --el-bg-color-overlay: var(--bv-glass-strong);
+    --el-fill-color-blank: var(--bv-editor-paper);
+    --el-border-color: var(--bv-glass-line);
+    --el-font-family: var(--bv-font-body);
+  }
+
+  @supports not (backdrop-filter: blur(1px)) {
+    :root[data-blueview-theme='true'] .document-body,
+    :root[data-blueview-theme='true'] .read-aloud,
+    :root[data-blueview-theme='true'] .side-bar {
+      background: var(--bv-glass-strong);
+    }
+  }
+}
+
+@media print {
+  .blue-view-backdrop {
+    display: none !important;
+  }
+}

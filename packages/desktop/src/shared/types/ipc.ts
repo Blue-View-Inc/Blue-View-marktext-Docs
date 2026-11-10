@@ -1,13 +1,33 @@
-import type { ProjectRootsSnapshot, ProjectTreeEvent, SidebarMoveRequest, SidebarMoveResult } from './project'
+import type {
+  ProjectRootsSnapshot,
+  ProjectTreeEvent,
+  SidebarMoveRequest,
+  SidebarMoveResult
+} from './project'
 /**
  * Cross-process IPC contract: invoke returns a Promise, send is fire-and-forget,
  * sync returns directly, and main events push payloads to renderer listeners.
  */
 
 import type { IKeyboardLayoutInfo, IKeyboardMapping } from 'native-keymap'
-import type { TabOptions, SidebarOpenOptions, PageOptions, ExportType, SerializedStat, LineEnding, FileChangeDetail, PandocExportPayload } from './files'
+import type {
+  TabOptions,
+  SidebarOpenOptions,
+  PageOptions,
+  ExportType,
+  SerializedStat,
+  LineEnding,
+  FileChangeDetail,
+  PandocExportPayload
+} from './files'
 import type { MenuTemplate, MenuPopupPosition } from './menu'
 import type { PandocCommandInfo } from './pandoc'
+import type {
+  InstallVoiceResult,
+  SpeechAudioResult,
+  SpeechVoice,
+  SpeechVoiceSettings
+} from './speech'
 
 export interface SaveDialogRequest {
   title?: string
@@ -36,6 +56,14 @@ export type SaveDocumentResult =
 import type { StateIpcInvokeChannels, StateIpcMainEvents } from './applicationState'
 
 export interface IpcInvokeChannels extends StateIpcInvokeChannels {
+  'mt::speech::synthesize': {
+    args: [text: string, voice?: SpeechVoiceSettings]
+    ret: SpeechAudioResult
+  }
+  'mt::speech::cancel': { args: []; ret: void }
+  'mt::speech::voices': { args: []; ret: SpeechVoice[] }
+  'mt::speech::voice-license': { args: [voiceId: string]; ret: string | null }
+  'mt::speech::install-voice': { args: [voiceId: string]; ret: InstallVoiceResult }
   'mt::get-recently-used-documents': { args: []; ret: RecentDocument[] }
   'mt::project-remove-root': { args: [key: string]; ret: boolean }
   'mt::project-retry-root': { args: [key: string]; ret: boolean }
@@ -209,6 +237,7 @@ export interface IpcSyncChannels {
 }
 
 export interface IpcMainEventChannels extends StateIpcMainEvents {
+  'mt::read-aloud': []
   'mt::toggle-read-only': []
   'language-changed': [language: string]
   'mt::UPDATE_AVAILABLE': [info?: unknown]

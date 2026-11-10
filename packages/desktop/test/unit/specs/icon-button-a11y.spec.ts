@@ -3,6 +3,7 @@ import { readFileSync, readdirSync } from 'node:fs'
 import { dirname, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { parse } from 'vue/compiler-sfc'
+import { readThemeCss } from '../themeCss'
 
 // #4997: icon-only controls had no accessible name (a `title` at best), and
 // keyboard focus on them was invisible because of the global `:focus` reset.
@@ -46,9 +47,7 @@ const listVueFiles = (dir: string): string[] =>
   })
 
 const elementsOf = (file: string): TemplateNode[] => {
-  const ast = parse(readFileSync(file, 'utf8')).descriptor.template?.ast as
-    | TemplateNode
-    | undefined
+  const ast = parse(readFileSync(file, 'utf8')).descriptor.template?.ast as TemplateNode | undefined
   const out: TemplateNode[] = []
   const visit = (node: TemplateNode): void => {
     if (node.type === ELEMENT) out.push(node)
@@ -106,8 +105,11 @@ describe('icon-only controls have an accessible name (#4997)', () => {
         const content = attr(el, 'content')
         let control = children.length === 1 ? children[0] : undefined
         if (control?.tag === 'span') {
-          const nested = (control.children ?? []).filter(c => c.type === ELEMENT)
-          control = nested.length === 1 && ['button', 'el-button'].includes(nested[0].tag ?? '') ? nested[0] : undefined
+          const nested = (control.children ?? []).filter((c) => c.type === ELEMENT)
+          control =
+            nested.length === 1 && ['button', 'el-button'].includes(nested[0].tag ?? '')
+              ? nested[0]
+              : undefined
         }
         const label = control ? attr(control, 'aria-label') : null
         if (!content || label !== content) mismatched.push(where(file, el))
@@ -202,7 +204,7 @@ describe('focus ring meets WCAG 1.4.11 non-text contrast (#4997)', () => {
       .filter((f) => f.endsWith('.theme.css'))
       .map((f): [string, Record<string, string>] => [
         f.replace('.theme.css', ''),
-        { ...baseVars, ...parseVars(readFileSync(resolve(THEME_DIR, f), 'utf8')) }
+        { ...baseVars, ...parseVars(readThemeCss(resolve(THEME_DIR, f))) }
       ])
   ]
 

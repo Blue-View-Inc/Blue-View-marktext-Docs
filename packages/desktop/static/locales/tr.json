@@ -108,15 +108,15 @@
       "checkUpdates": "Güncellemeleri Denetle"
     },
     "marktext": {
-      "title": "MarkText",
-      "about": "MarkText Hakkında",
+      "title": "Blue View",
+      "about": "Blue View Hakkında",
       "checkUpdates": "Güncellemeleri Denetle...",
       "preferences": "Tercihler",
       "services": "Hizmetler",
-      "hide": "MarkText'i Gizle",
+      "hide": "Blue View'i Gizle",
       "hideOthers": "Diğerlerini Gizle",
       "showAll": "Tümünü Göster",
-      "quit": "MarkText'ten Çık"
+      "quit": "Blue View'ten Çık"
     },
     "view": {
       "view": "Görünüm",
@@ -184,7 +184,9 @@
       "tokyoNight": "Tokyo Night",
       "tokyoNightLight": "Tokyo Night Light",
       "tokyoNightStorm": "Tokyo Night Storm",
-      "ulyssesLight": "Ulysses Light"
+      "ulyssesLight": "Ulysses Light",
+      "blueviewLight": "Blue View Light",
+      "blueviewDark": "Blue View Dark"
     }
   },
   "contextMenu": {
@@ -293,7 +295,7 @@
       "conflict": "The destination already contains an item with this name. Rename it before trying again.",
       "missing": "The source or destination no longer exists. Refresh the folder and try again.",
       "permission": "The item could not be moved. Check folder permissions and whether another application is using it.",
-      "openElsewhere": "Close this file and any documents inside this folder in other MarkText windows before moving it.",
+      "openElsewhere": "Close this file and any documents inside this folder in other Blue View windows before moving it.",
       "destinationOpen": "A document is already open at the destination path. Close it before trying again."
     }
   },
@@ -310,7 +312,9 @@
       "lastModified": "Değişti",
       "unavailable": "—",
       "open": "Belge istatistiklerini aç"
-    }
+    },
+    "useDarkMode": "Use dark mode",
+    "useLightMode": "Use light mode"
   },
   "commandPalette": {
     "placeholder": "Çalıştırmak için bir komut yazın",
@@ -410,7 +414,7 @@
   },
   "import": {
     "title": "İçe Aktar veya Aç",
-    "description": "İçeriklerinizi MarkText'e almak için buraya bırakın"
+    "description": "İçeriklerinizi Blue View'e almak için buraya bırakın"
   },
   "preferences": {
     "title": "Tercihler",
@@ -633,7 +637,7 @@
         "scriptPath": "Betik yolu",
         "invalidScript": "Var olan ve çalıştırılabilir bir betiğin yolunu girin."
       },
-      "defaultBehavior": "Görseli MarkText'e yapıştırdıktan veya sürükledikten sonraki varsayılan davranış"
+      "defaultBehavior": "Görseli Blue View'e yapıştırdıktan veya sürükledikten sonraki varsayılan davranış"
     },
     "markdown": {
       "title": "Markdown",
@@ -664,10 +668,10 @@
           "simple": "Basit"
         },
         "mermaidLightTheme": {
-          "title": "MarkText açık temaları için Mermaid teması"
+          "title": "Blue View açık temaları için Mermaid teması"
         },
         "mermaidDarkTheme": {
-          "title": "MarkText koyu temaları için Mermaid teması"
+          "title": "Blue View koyu temaları için Mermaid teması"
         },
         "plantumlServer": {
           "title": "PlantUML Sunucu URL'si"
@@ -778,11 +782,12 @@
   },
   "about": {
     "copyright": "Telif Hakkı © Luo Ran 2017-{year}",
-    "copyrightContributors": "Github Katkıda Bulunanlar tarafından <3 ile yapıldı"
+    "copyrightContributors": "Github Katkıda Bulunanlar tarafından <3 ile yapıldı",
+    "upstreamAttribution": "Blue View edition · Based on MarkText"
   },
   "commands": {
     "mt": {
-      "hide": "MarkText'i Gizle",
+      "hide": "Blue View'i Gizle",
       "hideOthers": "Diğerlerini Gizle"
     },
     "file": {
@@ -939,7 +944,7 @@
     "fileExists": "Dosya zaten var: {filename}",
     "files": "Dosyalar",
     "importWarning": "İçe aktarma uyarısı",
-    "installPandoc": "Pandoc bulunamadı. Yükleyin veya MARKTEXT_PANDOC ortam değişkenini pandoc çalıştırılabilir dosyasının yolu olarak ayarlayıp MarkText'i yeniden başlatın.",
+    "installPandoc": "Pandoc bulunamadı. Yükleyin veya MARKTEXT_PANDOC ortam değişkenini pandoc çalıştırılabilir dosyasının yolu olarak ayarlayıp Blue View'i yeniden başlatın.",
     "exportWarning": "Dışa aktarma uyarısı",
     "exportWarningMore": "…ve {count} tane daha",
     "keepOpen": "Açık tut",
@@ -956,7 +961,7 @@
     "configSchemaViolation": "Yapılandırma şeması ihlali",
     "copyError": "Kopyalama hatası",
     "initializationFailed": "Başlatma başarısız {hint}",
-    "otherInstanceDetected": "Başka bir MarkText penceresi zaten açık",
+    "otherInstanceDetected": "Başka bir Blue View penceresi zaten açık",
     "report": "Bildir",
     "startupError": "Başlangıç hatası",
     "terminatedDueToError": "Hata nedeniyle sonlandırıldı",
@@ -1060,5 +1065,56 @@
     "viewImage": "Görseli Görüntüle",
     "copyLink": "Bağlantı Adresini Kopyala",
     "resumed": "Düzenleme Modu açık. Otomatik kaydetme devam ediyor."
+  },
+  "readAloud": {
+    "title": "Read Aloud",
+    "playback": "Reading controls",
+    "previousParagraph": "Previous paragraph",
+    "nextParagraph": "Next paragraph",
+    "previousSentence": "Previous sentence",
+    "nextSentence": "Next sentence",
+    "play": "Play",
+    "pause": "Pause",
+    "stop": "Stop reading",
+    "speed": "Speed",
+    "normalSpeed": "1×",
+    "skipCitations": "Skip citations and bibliography",
+    "progress": "Sentence {sentence}/{sentences} · Paragraph {paragraph}/{paragraphs}",
+    "loading": "Preparing voice…",
+    "paused": "Paused",
+    "stopped": "Stopped",
+    "finished": "Finished",
+    "error": "Unable to read",
+    "empty": "There is no readable text in this document.",
+    "unavailable": "Download the selected voice in Voice and calibration to enable Read Aloud.",
+    "failed": "Read Aloud could not play this sentence. Press Play to try again.",
+    "tuneVoice": "Voice and calibration",
+    "readDocument": "Read document",
+    "language": "Language",
+    "voice": "Voice",
+    "speaker": "Speaker",
+    "installed": "Ready",
+    "downloadVoice": "Download voice ({size} MB)",
+    "downloading": "Downloading voice…",
+    "preview": "Preview voice",
+    "showAllVoices": "Show all voice models",
+    "voiceHelp": "Recommended voices use the catalog’s quality ratings. Preview reads this document’s first sentence. Choose a voice that matches the document language; it does not translate. Some languages may download additional pronunciation data on first use.",
+    "downloadFailed": "The voice could not be downloaded. Check your connection and try again.",
+    "style": "Delivery",
+    "relaxed": "Warm and relaxed",
+    "neutral": "Clear and neutral",
+    "expressive": "Brisk and expressive",
+    "expression": "Expression",
+    "sentencePause": "Sentence pause",
+    "paragraphPause": "Paragraph pause",
+    "voiceLicense": "Voice license and model card",
+    "licenseHelp": "This voice has its own terms. Availability does not mean unrestricted commercial use. See the model card and its dataset license.",
+    "loadingLicense": "Loading license details…",
+    "licenseUnavailable": "License details could not be loaded. Open the model card to review the terms.",
+    "openModelCard": "Open model card",
+    "showControls": "Show controls",
+    "hideControls": "Hide controls",
+    "autoHideControls": "Automatically hide controls during playback",
+    "engineLicense": "Speech engine license (GPL-3.0-or-later)"
   }
 }

@@ -108,15 +108,15 @@
       "checkUpdates": "업데이트 확인"
     },
     "marktext": {
-      "title": "MarkText",
-      "about": "MarkText 정보",
+      "title": "Blue View",
+      "about": "Blue View 정보",
       "checkUpdates": "업데이트 확인...",
       "preferences": "환경설정",
       "services": "서비스",
-      "hide": "MarkText 숨기기",
+      "hide": "Blue View 숨기기",
       "hideOthers": "다른 앱 숨기기",
       "showAll": "모두 보기",
-      "quit": "MarkText 종료"
+      "quit": "Blue View 종료"
     },
     "view": {
       "view": "보기",
@@ -184,7 +184,9 @@
       "tokyoNight": "Tokyo Night",
       "tokyoNightLight": "Tokyo Night 라이트",
       "tokyoNightStorm": "Tokyo Night Storm",
-      "ulyssesLight": "율리시스 라이트"
+      "ulyssesLight": "율리시스 라이트",
+      "blueviewLight": "Blue View Light",
+      "blueviewDark": "Blue View Dark"
     }
   },
   "contextMenu": {
@@ -293,7 +295,7 @@
       "conflict": "The destination already contains an item with this name. Rename it before trying again.",
       "missing": "The source or destination no longer exists. Refresh the folder and try again.",
       "permission": "The item could not be moved. Check folder permissions and whether another application is using it.",
-      "openElsewhere": "Close this file and any documents inside this folder in other MarkText windows before moving it.",
+      "openElsewhere": "Close this file and any documents inside this folder in other Blue View windows before moving it.",
       "destinationOpen": "A document is already open at the destination path. Close it before trying again."
     }
   },
@@ -310,7 +312,9 @@
       "lastModified": "수정됨",
       "unavailable": "—",
       "open": "문서 통계 열기"
-    }
+    },
+    "useDarkMode": "Use dark mode",
+    "useLightMode": "Use light mode"
   },
   "commandPalette": {
     "placeholder": "실행할 명령을 입력하세요",
@@ -410,7 +414,7 @@
   },
   "import": {
     "title": "가져오기 또는 열기",
-    "description": "여기에 드롭하여 MarkText로 가져오세요"
+    "description": "여기에 드롭하여 Blue View로 가져오세요"
   },
   "preferences": {
     "title": "환경설정",
@@ -633,7 +637,7 @@
         "lastSuccessTime": "마지막 성공 시간",
         "invalidScript": "실행 가능한 기존 스크립트의 경로를 입력하세요."
       },
-      "defaultBehavior": "이미지를 MarkText에 붙여넣거나 드래그한 후의 기본 동작"
+      "defaultBehavior": "이미지를 Blue View에 붙여넣거나 드래그한 후의 기본 동작"
     },
     "markdown": {
       "title": "마크다운",
@@ -664,10 +668,10 @@
           "simple": "간단"
         },
         "mermaidLightTheme": {
-          "title": "MarkText 라이트 테마용 Mermaid 테마"
+          "title": "Blue View 라이트 테마용 Mermaid 테마"
         },
         "mermaidDarkTheme": {
-          "title": "MarkText 다크 테마용 Mermaid 테마"
+          "title": "Blue View 다크 테마용 Mermaid 테마"
         },
         "plantumlServer": {
           "title": "PlantUML 서버 URL"
@@ -778,11 +782,12 @@
   },
   "about": {
     "copyright": "Copyright © Luo Ran 2017-{year}",
-    "copyrightContributors": "저작권 기여자"
+    "copyrightContributors": "저작권 기여자",
+    "upstreamAttribution": "Blue View edition · Based on MarkText"
   },
   "commands": {
     "mt": {
-      "hide": "MarkText 숨기기",
+      "hide": "Blue View 숨기기",
       "hideOthers": "다른 앱 숨기기"
     },
     "file": {
@@ -939,7 +944,7 @@
     "fileExists": "파일이 이미 존재합니다: {filename}",
     "files": "파일",
     "importWarning": "가져오기 경고",
-    "installPandoc": "Pandoc를 찾을 수 없습니다. 설치하거나 환경 변수 MARKTEXT_PANDOC에 pandoc 실행 파일 경로를 설정한 뒤 MarkText를 다시 시작하세요.",
+    "installPandoc": "Pandoc를 찾을 수 없습니다. 설치하거나 환경 변수 MARKTEXT_PANDOC에 pandoc 실행 파일 경로를 설정한 뒤 Blue View를 다시 시작하세요.",
     "exportWarning": "내보내기 경고",
     "exportWarningMore": "…외 {count}건",
     "keepOpen": "열어두기",
@@ -956,7 +961,7 @@
     "configSchemaViolation": "구성 스키마 위반",
     "copyError": "복사 오류",
     "initializationFailed": "초기화 실패 {hint}",
-    "otherInstanceDetected": "MarkText의 다른 인스턴스가 이미 실행 중입니다",
+    "otherInstanceDetected": "Blue View의 다른 인스턴스가 이미 실행 중입니다",
     "report": "신고",
     "startupError": "시작 오류",
     "terminatedDueToError": "오류로 인해 종료됨",
@@ -1060,5 +1065,56 @@
     "viewImage": "이미지 보기",
     "copyLink": "링크 주소 복사",
     "resumed": "편집 모드가 켜졌습니다. 자동 저장이 재개되었습니다."
+  },
+  "readAloud": {
+    "title": "Read Aloud",
+    "playback": "Reading controls",
+    "previousParagraph": "Previous paragraph",
+    "nextParagraph": "Next paragraph",
+    "previousSentence": "Previous sentence",
+    "nextSentence": "Next sentence",
+    "play": "Play",
+    "pause": "Pause",
+    "stop": "Stop reading",
+    "speed": "Speed",
+    "normalSpeed": "1×",
+    "skipCitations": "Skip citations and bibliography",
+    "progress": "Sentence {sentence}/{sentences} · Paragraph {paragraph}/{paragraphs}",
+    "loading": "Preparing voice…",
+    "paused": "Paused",
+    "stopped": "Stopped",
+    "finished": "Finished",
+    "error": "Unable to read",
+    "empty": "There is no readable text in this document.",
+    "unavailable": "Download the selected voice in Voice and calibration to enable Read Aloud.",
+    "failed": "Read Aloud could not play this sentence. Press Play to try again.",
+    "tuneVoice": "Voice and calibration",
+    "readDocument": "Read document",
+    "language": "Language",
+    "voice": "Voice",
+    "speaker": "Speaker",
+    "installed": "Ready",
+    "downloadVoice": "Download voice ({size} MB)",
+    "downloading": "Downloading voice…",
+    "preview": "Preview voice",
+    "showAllVoices": "Show all voice models",
+    "voiceHelp": "Recommended voices use the catalog’s quality ratings. Preview reads this document’s first sentence. Choose a voice that matches the document language; it does not translate. Some languages may download additional pronunciation data on first use.",
+    "downloadFailed": "The voice could not be downloaded. Check your connection and try again.",
+    "style": "Delivery",
+    "relaxed": "Warm and relaxed",
+    "neutral": "Clear and neutral",
+    "expressive": "Brisk and expressive",
+    "expression": "Expression",
+    "sentencePause": "Sentence pause",
+    "paragraphPause": "Paragraph pause",
+    "voiceLicense": "Voice license and model card",
+    "licenseHelp": "This voice has its own terms. Availability does not mean unrestricted commercial use. See the model card and its dataset license.",
+    "loadingLicense": "Loading license details…",
+    "licenseUnavailable": "License details could not be loaded. Open the model card to review the terms.",
+    "openModelCard": "Open model card",
+    "showControls": "Show controls",
+    "hideControls": "Hide controls",
+    "autoHideControls": "Automatically hide controls during playback",
+    "engineLicense": "Speech engine license (GPL-3.0-or-later)"
   }
 }

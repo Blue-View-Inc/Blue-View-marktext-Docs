@@ -1,0 +1,26 @@
+@import './blueview-base.css';
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bv-editor-paper: #1c241e;
+  --bv-window-background: #141a16;
+  --bv-primary-on: #14200f;
+  --bv-accent: #9fc57e;
+  --bv-text-ink: #e6e8df;
+  --bv-text-muted: #9fab99;
+  --bv-text-subtle: #9fab99;
+  --bv-page: #141a16;
+  --bv-backdrop-ground: linear-gradient(180deg, #141a16 0%, #141a16 100%);
+  --bv-glass-fill: linear-gradient(140deg, rgba(35, 45, 37, 0.94), rgba(28, 36, 30, 0.94));
+  --bv-glass-soft: rgba(28, 36, 30, 0.94);
+  --bv-glass-strong: #232d25;
+  --bv-glass-edge: #31402f;
+  --bv-glass-line: #31402f;
+  --bv-glass-hairline: #31402f;
+  --bv-glass-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+  --bv-card-fill: #1c241e;
+  --bv-card-alt: #232d25;
+  --bv-card-shadow: inset 0 0 0 1px #31402f;
+  --bv-hover-fill: #26312a;
+  --bv-hover-edge: #4d5f4a;
+}

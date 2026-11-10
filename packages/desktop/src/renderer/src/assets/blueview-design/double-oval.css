@@ -1,0 +1,125 @@
+/*
+ * The Blue View double oval as a CSS-only backdrop: a few large glass lenses,
+ * gold over blue, drifting very slowly behind the page. Built only from
+ * ../tokens/tokens.css (load that first). Markup: see fallback/README.md.
+ *
+ * Three empty, aria-hidden spans; each pair is drawn with ::before (gold) and
+ * ::after (blue). Only transform is animated, so the drift stays on the
+ * compositor. No script, no image, nothing for a Content-Security-Policy to
+ * object to, and it works unchanged offline.
+ */
+.bv-glass-field {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--bv-backdrop-glow-gold), var(--bv-backdrop-glow-blue), var(--bv-backdrop-ground);
+}
+
+/* One lens pair: two 2:1 ellipses with the mark's small gap between them
+   (each oval 48% of the pair's height, 4% gap). */
+.bv-lens {
+  position: absolute;
+  display: block;
+  aspect-ratio: 1 / 1.04;
+  opacity: var(--bv-lens-opacity);
+  will-change: transform;
+  animation: bv-lens-drift-a 84s ease-in-out infinite alternate;
+}
+.bv-lens::before,
+.bv-lens::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 48.08%;
+  border-radius: 50%;
+  border: 1px solid var(--bv-lens-edge);
+}
+/* Each oval: a crescent of specular light at the top left, a softer caustic
+   where light leaves the lower edge, and the tint itself. The inset shadows
+   give the rim its thickness. */
+.bv-lens::before {
+  top: 0;
+  background:
+    radial-gradient(58% 46% at 31% 24%, var(--bv-lens-shine), transparent 62%),
+    radial-gradient(36% 26% at 70% 88%, var(--bv-lens-caustic), transparent 72%),
+    var(--bv-lens-gold);
+  box-shadow: var(--bv-lens-shadow-gold);
+}
+.bv-lens::after {
+  bottom: 0;
+  background:
+    radial-gradient(58% 46% at 31% 24%, var(--bv-lens-shine), transparent 62%),
+    radial-gradient(36% 26% at 70% 88%, var(--bv-lens-caustic), transparent 72%),
+    var(--bv-lens-blue);
+  box-shadow: var(--bv-lens-shadow-blue);
+}
+
+.bv-lens-a {
+  width: min(44vw, 620px);
+  right: -6vw;
+  top: 8vh;
+}
+.bv-lens-b {
+  width: min(27vw, 380px);
+  left: -5vw;
+  top: 55vh;
+  animation-name: bv-lens-drift-b;
+  animation-duration: 104s;
+}
+.bv-lens-c {
+  width: min(11vw, 150px);
+  left: 49vw;
+  top: 74vh;
+  animation-name: bv-lens-drift-c;
+  animation-duration: 68s;
+}
+@keyframes bv-lens-drift-a {
+  from {
+    transform: translate3d(0, 0, 0) rotate(-7deg);
+  }
+  to {
+    transform: translate3d(-4vw, 5vh, 0) rotate(-1deg) scale(1.04);
+  }
+}
+@keyframes bv-lens-drift-b {
+  from {
+    transform: translate3d(0, 0, 0) rotate(9deg);
+  }
+  to {
+    transform: translate3d(5vw, -6vh, 0) rotate(3deg) scale(1.06);
+  }
+}
+@keyframes bv-lens-drift-c {
+  from {
+    transform: translate3d(0, 0, 0) rotate(-4deg);
+  }
+  to {
+    transform: translate3d(-6vw, -8vh, 0) rotate(8deg);
+  }
+}
+@media (max-width: 760px) {
+  .bv-lens-a {
+    width: 84vw;
+    right: -26vw;
+    top: 3vh;
+  }
+  .bv-lens-b {
+    width: 62vw;
+    left: -22vw;
+    top: 60vh;
+  }
+  .bv-lens-c {
+    width: 22vw;
+    left: 84vw;
+    top: 46vh;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bv-lens {
+    animation: none;
+    will-change: auto;
+  }
+}
