@@ -87,10 +87,10 @@ test('reads locally with sentence/paragraph navigation, pause and speed controls
   }
 })
 
-test('continues naturally across sentences while omitting code blocks', async() => {
+test('continues naturally across sentences while omitting code blocks and URLs', async() => {
   test.setTimeout(60000)
   const { app, page } = await launchWithMarkdown(
-    'A short beginning. The second sentence follows naturally.\n\n```js\nnever_read_this_code()\n```\n\nThe next paragraph is ready.'
+    'A short beginning. The second sentence follows naturally.\n\n```js\nnever_read_this_code()\n```\n\nhttps://example.com/never-read-this-address. The [next paragraph](https://example.com/guide) is ready.'
   )
   try {
     await page.evaluate(() => {

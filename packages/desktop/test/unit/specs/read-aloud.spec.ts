@@ -165,6 +165,38 @@ describe('Read Aloud playback', () => {
 
 describe('readable Markdown', () => {
   it.each([
+    'https://example.com/a?secret=token#section',
+    '<https://example.com/a>',
+    'https://example.com/wiki/Function_(math)',
+    '[https://example.com/a](https://example.com/a)',
+    '[example.com](https://example.com)',
+    '[example.com/a](https://example.com/a)',
+    'www.example.com/a',
+    '`https://example.com/a`',
+    '<a href="https://example.com/a">https://example.com/a</a>'
+  ])('omits a visible URL while preserving surrounding prose: %s', (url) => {
+    expect(readingSentences(`Before.\n\n${url}\n\nAfter.`).map(s => s.text)).toEqual(['Before.', 'After.'])
+  })
+
+  it('keeps descriptive link text and sentence punctuation while omitting addresses', () => {
+    expect(readingSentences('Read [the guide](https://example.com). Visit https://example.com/a, then continue.').map(s => s.text)).toEqual(['Read the guide.', 'Visit, then continue.'])
+    expect(readingSentences('Before (https://example.com/a). After.').map(s => s.text)).toEqual(['Before.', 'After.'])
+  })
+
+  it('keeps filenames and descriptive relative links readable', () => {
+    expect(readingSentences('Open README.md and [the notes](notes.md).').map(s => s.text)).toEqual(['Open README.md and the notes.'])
+  })
+
+  it('does not queue empty sentences for a skipped URL', () => {
+    expect(readingSentences('https://example.com. Keep reading.').map(s => s.text)).toEqual(['Keep reading.'])
+    expect(readingSentences('https://example.com。\n\nKeep reading.').map(s => s.text)).toEqual(['Keep reading.'])
+  })
+
+  it('retains prose after a URL followed by CJK punctuation', () => {
+    expect(readingSentences('前 https://example.com，続き。').map(s => s.text)).toEqual(['前，続き。'])
+  })
+
+  it.each([
     '```typescript\nconst secret = 42\n```',
     '~~~python\nprint("secret")\n~~~',
     '    secret()',

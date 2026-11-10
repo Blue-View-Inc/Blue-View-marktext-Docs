@@ -1,6 +1,13 @@
 import { renderToStaticHTML } from '@muyajs/core'
 import type { ReadingSentence } from '@/services/readAloud'
 
+const omitWebAddresses = (text: string): string =>
+  text.replace(/\b(?:[a-z][a-z\d+.-]*:\/\/|www\.)[^\s<>"\u200b，。！？；：、（）【】「」『』]+/gi, (address) =>
+    address.match(/[.,;:!?)\]}]+$/)?.[0] ?? ' '
+  )
+
+const hasReadingText = (text: string): boolean => Boolean(text) && !/^[\p{P}\s]+$/u.test(text)
+
 const splitLongSentence = (text: string): string[] => {
   const characters = Array.from(text)
   const parts: string[] = []
@@ -37,6 +44,21 @@ export const readingSentences = (
     const container = code.parentElement
     if (container && container.textContent?.trim() === code.textContent?.trim()) code.remove()
   }
+  for (const link of root.querySelectorAll('a[href]')) {
+    const label = link.textContent?.trim() ?? ''
+    try {
+      const destination = new URL(link.getAttribute('href') ?? '')
+      const address = destination.host + destination.pathname + destination.search + destination.hash
+      if (
+        /^(https?|ftp):$/.test(destination.protocol) &&
+        (label === destination.href ||
+          label === destination.host ||
+          label.replace(/\/$/, '') === address.replace(/\/$/, ''))
+      ) link.replaceWith(document.createTextNode(' '))
+    } catch {
+      // Relative links keep their descriptive labels.
+    }
+  }
   if (skipCitations) {
     root
       .querySelectorAll('.footnotes, [role="doc-noteref"], [role="doc-endnotes"], sup.footnote-ref')
@@ -63,16 +85,20 @@ export const readingSentences = (
       node.append(document.createTextNode('\n\n'))
     })
   root.querySelectorAll('td, th').forEach((node) => node.append(document.createTextNode(' ')))
-  const paragraphs = (root.textContent ?? '')
+  const paragraphs = omitWebAddresses(root.textContent ?? '')
     .split(/\n\s*\n/)
     .map((text) =>
-      (skipCitations ? text.replace(/\[@[^\]]+\]/g, '') : text).replace(/\s+/g, ' ').trim()
+      (skipCitations ? text.replace(/\[@[^\]]+\]/g, '') : text)
+        .replace(/\(\s*\)|\[\s*\]/g, ' ')
+        .replace(/\s+([.,;:!?，。！？；：、])/g, '$1')
+        .replace(/\s+/g, ' ')
+        .trim()
     )
-    .filter(Boolean)
+    .filter(hasReadingText)
   const segmenter = new Intl.Segmenter(language?.replace('_', '-'), { granularity: 'sentence' })
   return paragraphs.flatMap((text, paragraph) =>
     [...segmenter.segment(text)].flatMap(({ segment }) =>
-      splitLongSentence(segment.trim()).map((text) => ({ text, paragraph }))
+      splitLongSentence(segment.trim()).filter(hasReadingText).map((text) => ({ text, paragraph }))
     )
   )
 }

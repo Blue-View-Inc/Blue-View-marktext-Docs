@@ -13,7 +13,8 @@ them manually, and the auto-hide checkbox keeps them expanded when desired.
 
 The voice runs locally through Piper. Document text is never sent to a
 speech service. Fenced, indented, HTML and code-only blocks and front matter are omitted;
-inline code within prose remains readable. Citations and reference
+inline code within prose remains readable. Visible web addresses are omitted;
+descriptive link labels remain readable. The document itself is unchanged. Citations and reference
 sections can also be skipped. Speed changes preserve pitch. The next sentence is
 prepared during playback, and only adjacent audio is retained in memory.
 
