@@ -1,6 +1,7 @@
 @import './blueview-base.css';
 
-:root[data-theme='dark'] {
+:root[data-theme='dark'],
+:root[data-theme='dark'] body {
   color-scheme: dark;
   --bv-editor-paper: #1c241e;
   --bv-window-background: #141a16;

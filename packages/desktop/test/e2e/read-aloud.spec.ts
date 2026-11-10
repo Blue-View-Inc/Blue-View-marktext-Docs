@@ -17,6 +17,7 @@ test('reads locally with sentence/paragraph navigation, pause and speed controls
     await page.getByRole('button', { name: 'Use dark mode', exact: true }).click()
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark')
     await expect(page.locator('.document-body')).toHaveCSS('background-color', 'rgb(28, 36, 30)')
+    await expect(page.locator('.title-bar')).toHaveCSS('background-color', 'rgba(28, 36, 30, 0.94)')
     await page.getByRole('button', { name: 'Use light mode', exact: true }).click()
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'light')
     await page.evaluate(() => {
